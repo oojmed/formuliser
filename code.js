@@ -156,6 +156,7 @@ function processFormula(formula, subprocess) {
   let elements = [];
   let names = [];
   let totalMass = 0;
+  let fail = false;
 
   for (let i = 0; i < symbols.length; i++) {
     let s = symbols[i];
@@ -172,7 +173,7 @@ function processFormula(formula, subprocess) {
     for (let y = 0; y < n; y++) {
         let el = periodicLookup[s];
 
-        if (el === undefined) { continue; }
+        if (el === undefined) { fail = s; break; }
 
         names.push(el.name);
         totalMass += el.mass;
@@ -180,6 +181,8 @@ function processFormula(formula, subprocess) {
         elements.push(el);
     }
   }
+
+  if (fail) { return [false, fail]; }
 
   let lastName = "";
   let lastCount = 1;
@@ -234,8 +237,25 @@ f.oninput = function() {
   document.getElementById('formula').value = value;
 
   let result = processFormula(value);
+
+  if (result[0] === false) {
+    document.getElementById("elements").style.color = "#B71C1C";
+    document.getElementById("mass").style.color = "#B71C1C";
+
+    document.getElementById("elements-bold").innerText = result[1];
+    document.getElementById("elements-body").innerText = ` is not an element`;
+
+    document.getElementById("mass").innerText = "Error";
+
+    return;
+  }
   
-  document.getElementById("elements").innerText = result[0];
+  document.getElementById("elements").style.color = "";
+  document.getElementById("mass").style.color = "";
+
+  document.getElementById("elements-bold").innerText = "";
+
+  document.getElementById("elements-body").innerText = result[0];
   document.getElementById("mass").innerText = result[1];
 }
 

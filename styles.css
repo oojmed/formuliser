@@ -1,0 +1,63 @@
+html, body {
+    background-color: #1f1f1f;
+    color: rgba(255, 255, 255, .87);
+    font-family: Roboto, sans-serif;
+}
+
+* {
+    font-family: Roboto, sans-serif;
+}
+
+#mass, #elements, #formula {
+    position: absolute;
+
+    text-align: center;
+    text-shadow: 0px 0px 10px black;
+    color: rgba(255, 255, 255, .8);
+
+    overflow: auto;
+}
+
+#mass {
+    bottom: 0.5%;
+    left: 25%;
+
+    width: 50%;
+    
+    color: rgba(255, 255, 255, .8);
+    
+    font-size: 48px;
+}
+
+#elements {
+    top: 60%;
+    left: 12.5%;
+
+    width: 75%;
+    height: 20%;
+
+    font-size: 28px;
+}
+
+#formula {
+    top: 45%;
+    left: 25%;
+
+    height: 10%;
+    width: 50%;
+
+    color: rgba(255, 255, 255, .99);
+    font-size: 56px;
+
+    background-color: transparent;
+
+    border: none;
+    border-radius: 5px;
+}
+
+#formula:focus {
+    outline: none;
+    /*border: 2px solid rgba(255, 255, 255, .3);
+
+    background-color: rgba(255, 255, 255, .1);*/
+}

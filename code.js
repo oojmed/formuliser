@@ -128,14 +128,36 @@ let compoundLookup = {
 'C12H22O11': 'Sucrose',
 'HCl': 'Hydrochloric acid',
 'HNO3': 'Nitric acid',
-'H2SO4': 'Sulfuric acid'
+'H2SO4': 'Sulfuric acid',
+'C8H18': 'Octane',
+'NaHCO3': 'Baking Soda',
+'CH4': 'Methane',
+'NH3': 'Ammonia',
+'C6H6': 'Benzene',
+'C2H6O': 'Ethanol',
+'H2O2': 'Hydrogen Peroxide',
+'CH3COOH': 'Acetic Acid',
+'CH3OH': 'Methanol',
+'C60': 'Buckminsterfullerene',
+'C2H4': 'Ethylene',
+'C3H6O': 'Acetone',
+'C4H10': 'Butane',
+'C6H8O7': 'Citric Acid',
+'C4H8O': 'Tetrahydrofuran',
+'C6H14': 'Hexane',
+'C3H8': 'Propane',
+'C2H4O2': 'Vinegar',
+'C10H16O': 'Camphor',
+'NaCl': 'Salt'
 };
 let compoundLookupKeys = Object.keys(compoundLookup);
+let compoundLookupValues = Object.values(compoundLookup);
 
 // window.periodicLookupKeys = Object.keys(window.lookup);
 
 let scriptsLookup = {'\u2080': '0', '\u2081': '1', '\u2082': '2', '\u2083': '3', '\u2084': '4', '\u2085': '5', '\u2086': '6', '\u2087': '7', '\u2088': '8', '\u2089': '9', '\u2070': '0', '\u00B9': '1', '\u00B2': '2', '\u00B3': '3', '\u2074': '4', '\u2075': '5', '\u2076': '6', '\u2077': '7', '\u2078': '8', '\u2079': '9'};
 let scriptsLookupKeys = Object.keys(scriptsLookup);
+
 
 let f = document.getElementById('formula');
 f.focus();
@@ -150,6 +172,22 @@ function processFormula(formula, subprocess) {
   }
 
   formula = formula.replace(/[^a-z0-9]/gmi, "");
+
+  let reverseElement = Object.values(periodicLookup).find(({ name }) => name.toLowerCase() === formula.toLowerCase());
+
+  if (reverseElement !== undefined) {
+    return [reverseElement.name, reverseElement.mass];
+  }
+
+  let reverseCompoundName = compoundLookupValues.find(name => name.toLowerCase() === formula.toLowerCase());
+
+  if (reverseCompoundName !== undefined) {
+    let reverseCompoundFormula = compoundLookupKeys[compoundLookupValues.indexOf(reverseCompoundName)];
+
+    let processed = processFormula(reverseCompoundFormula);
+  
+    return [processed[0].split(' - ')[1], processed[1]];
+  }
 
   let symbols = formula.split(/(?=[A-Z])/);
 
@@ -214,11 +252,24 @@ function processFormula(formula, subprocess) {
     
       let p = processFormula(c, false);
 
-      console.log(namesFinal, p);
-
       if (namesFinal === p[0]) { // if (namesFinal.indexOf(p[0]) !== -1) {
-        namesFinal = `${compoundLookup[c]} (${namesFinal})`;
+        namesFinal = `${compoundLookup[c]} - ${namesFinal}`;
       }
+    }
+
+    if (namesFinal === namesCombined.join(', ') && namesFinal.replace(/[^,]/g, "").length === 1) {
+      let compoundName = namesCombined.join(' ');
+
+      compoundName = compoundName.replace(/Oxygen/g, 'Monoxide');
+      compoundName = compoundName.replace(/Monoxide \(x2\)/g, 'Dioxide');
+      compoundName = compoundName.replace(/Monoxide \(x3\)/g, 'Trioxide');
+      compoundName = compoundName.replace(/Monoxide \(x4\)/g, 'Tetroxide');
+
+      compoundName = compoundName.replace(/Nitrogen \(x2\)/g, 'Dinitrogen');
+
+      compoundName = compoundName.replace(/ine/g, 'ide');
+
+      namesFinal = `${compoundName}* - ${namesFinal}`;
     }
   }
 
@@ -243,7 +294,7 @@ f.oninput = function() {
     document.getElementById("mass").style.color = "#B71C1C";
 
     document.getElementById("elements-bold").innerText = result[1];
-    document.getElementById("elements-body").innerText = ` is not an element`;
+    document.getElementById("elements-body").innerText = ` is not recognised`;
 
     document.getElementById("mass").innerText = "Error";
 

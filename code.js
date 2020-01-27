@@ -223,7 +223,7 @@ function processFormula(formula, subprocess) {
     formula = formula.replace(new RegExp(scriptsLookupKeys[i], 'gm'), scriptsLookup[scriptsLookupKeys[i]]);
   }
 
-  formula = formula.replace(/[^a-z0-9 ]/gmi, '');
+  formula = formula.replace(/[^a-z0-9 \(\)]/gmi, '');
 
   let reverseElement = Object.values(periodicLookup).find(({ name }) => name.toLowerCase() === formula.toLowerCase());
 
@@ -243,7 +243,44 @@ function processFormula(formula, subprocess) {
 
   formula = formula.replace(/ /g, '');
 
-  let symbols = formula.split(/(?=[A-Z])/);
+  let symbols = formula.split(/(?=[A-Z\(\)])/);
+
+  // symbols.unshift("(");
+  // symbols.push(")");
+
+  let multi = [];
+
+  let clone = [];
+
+  for (let i = symbols.length - 1; i >= 0; i--) {
+    if (symbols[i] === "(") {
+      if (multi.length === 0) {
+        return [false, ['', 'Brackets not ending']];
+      }
+
+      multi.pop();
+    } else if (symbols[i][0] === ")") {
+      let num = parseFloat(symbols[i].slice(1));
+      num = isNaN(num) ? 0 : num;
+
+      multi.push(num);
+    } else {
+      let split = symbols[i].split(/(?=[0-9])/)
+      let num = parseFloat(split.slice(1).join(''));
+      num = isNaN(num) ? 1 : num;
+
+      let mul = multi.reduce((a, b) => a + b, 0);
+      mul = mul === 0 ? 1 : mul;
+
+      clone.unshift(split[0] + (num * mul).toString());
+    }
+  }
+
+  if (multi.length > 0) {
+    return [false, ['', 'Brackets not opening']];
+  }
+
+  symbols = clone.slice(0);
 
   let elements = [];
   let names = [];
@@ -318,8 +355,6 @@ function processFormula(formula, subprocess) {
     if (namesFinal === namesCombined.join(', ') && namesFinal.replace(/[^,]/g, "").length === 1) {
       let newNames = namesCombined.slice(0);
 
-      console.log(newNames);
-
       for (let i = 0; i < newNames.length; i++) {
         newNames[i] = newNames[i].replace(/ygen\b/, 'ide');
         newNames[i] = newNames[i].replace(/ine\b/, 'ide');
@@ -333,7 +368,8 @@ function processFormula(formula, subprocess) {
         }
 
         newNames[i] = newNames[i].replace(/^([A-Za-z]{1,}) \(x([0-9]{1,3})\)/, function (_, el, count) {
-          let numPrefix = genNumPrefixes[parseInt(count)].replace('a', '');
+          let numPrefix = genNumPrefixes[parseInt(count)];
+          numPrefix = numPrefix === undefined ? '?' : numPrefix.replace('a', '');
           numPrefix = numPrefix[0].toUpperCase() + numPrefix.slice(1).toLowerCase(); // Sentance Case
 
           el = el.toLowerCase();
@@ -342,25 +378,25 @@ function processFormula(formula, subprocess) {
         });
       }
 
-      console.log(newNames);
-
       namesFinal = `${newNames.join(' ')}* - ${namesFinal}`;
     }
   }
-
-  console.log(namesFinal, elements);
 
   return [namesFinal, totalMass === 0 ? "" : parseFloat(totalMass.toPrecision(5))];
 }
 
 f.oninput = function() {
-  let value = document.getElementById('formula').value;
+  let value = f.value;
 
   for (let i = 0; i < scriptsLookupKeys.length; i++) {
     value = value.replace(new RegExp(scriptsLookup[scriptsLookupKeys[i]], 'gm'), scriptsLookupKeys[i]);
   }
 
-  document.getElementById('formula').value = value;
+  let s = f.selectionStart;
+
+  f.value = value;
+
+  f.setSelectionRange(s, s);
 
   let result = processFormula(value);
 

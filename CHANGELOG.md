@@ -5,6 +5,16 @@
 
 ---
 
+## v5.0.0
+
+### Features
+- Added support for brackets
+
+### Fixes
+- Don't crash if the number of elements doesn't have a number prefix
+- Don't lose / reset the cursor position when updating the value of the formula input
+
+
 ## v4.0.0
 
 ### Features

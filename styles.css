@@ -44,7 +44,7 @@ html, body {
 }
 
 #elements {
-    top: 60%;
+    top: calc(40% + 120px); /* 60%; */
     left: 12.5%;
 
     width: 75%;

@@ -148,7 +148,31 @@ let compoundLookup = {
 'C3H8': 'Propane',
 'C2H4O2': 'Vinegar',
 'C10H16O': 'Camphor',
-'NaCl': 'Salt'
+'NaCl': 'Salt',
+'SiO2': 'Silica',
+'OH': 'Hydroxide',
+'O3': 'Ozone',
+'Fe2O3': 'Rust',
+'CaO': 'Quicklime',
+'CaCO3': 'Limestone',
+'CO3': 'Carbonate',
+'HCO3': 'Bicarbonate',
+'PO4': 'Phosphate',
+'NH4': 'Ammonium',
+'CN': 'Cyanide',
+'NO3': 'Nitrate',
+'C7H8': 'Toluene',
+'SO4': 'Sulfate',
+'Al3F14Na5': 'Chiolite',
+'AlF6Na3': 'Cryolite',
+'Al2O5Si': 'Andalusite',
+'Al6O13Si2': 'Mullite',
+'Al3F14Na5': 'Chiolite',
+'AsH3': 'Arsine',
+'B3N3H6': 'Borazine',
+'BaFeSi4O10': 'Gillespite',
+'BaSO4': 'Barite',
+'CHCl3': 'Chloroform'
 };
 let compoundLookupKeys = Object.keys(compoundLookup);
 let compoundLookupValues = Object.values(compoundLookup);
@@ -158,6 +182,34 @@ let compoundLookupValues = Object.values(compoundLookup);
 let scriptsLookup = {'\u2080': '0', '\u2081': '1', '\u2082': '2', '\u2083': '3', '\u2084': '4', '\u2085': '5', '\u2086': '6', '\u2087': '7', '\u2088': '8', '\u2089': '9', '\u2070': '0', '\u00B9': '1', '\u00B2': '2', '\u00B3': '3', '\u2074': '4', '\u2075': '5', '\u2076': '6', '\u2077': '7', '\u2078': '8', '\u2079': '9'};
 let scriptsLookupKeys = Object.keys(scriptsLookup);
 
+let genNumPrefixes = [
+'',
+'mono',
+'di',
+'tri',
+'tetra',
+'penta',
+'hexa',
+'hepta',
+'octa',
+'nona',
+'deca',
+'undeca',
+'dodeca',
+'trideca',
+'tetradeca',
+'pentadeca',
+'hexadeca',
+'heptadeca',
+'octadeca',
+'nonadeca',
+'icosa',
+'henicosa',
+'docosa',
+'tricosa',
+'triaconta',
+'hentriaconta'
+];
 
 let f = document.getElementById('formula');
 f.focus();
@@ -171,7 +223,7 @@ function processFormula(formula, subprocess) {
     formula = formula.replace(new RegExp(scriptsLookupKeys[i], 'gm'), scriptsLookup[scriptsLookupKeys[i]]);
   }
 
-  formula = formula.replace(/[^a-z0-9]/gmi, "");
+  formula = formula.replace(/[^a-z0-9 ]/gmi, '');
 
   let reverseElement = Object.values(periodicLookup).find(({ name }) => name.toLowerCase() === formula.toLowerCase());
 
@@ -185,9 +237,11 @@ function processFormula(formula, subprocess) {
     let reverseCompoundFormula = compoundLookupKeys[compoundLookupValues.indexOf(reverseCompoundName)];
 
     let processed = processFormula(reverseCompoundFormula);
-  
+
     return [processed[0].split(' - ')[1], processed[1]];
   }
+
+  formula = formula.replace(/ /g, '');
 
   let symbols = formula.split(/(?=[A-Z])/);
 
@@ -220,7 +274,11 @@ function processFormula(formula, subprocess) {
     }
   }
 
-  if (fail) { return [false, fail]; }
+  if (fail) { return [false, [fail, ' is not recongised']]; }
+
+  if (elements.length >= 10000) {
+    return [false, [elements.length, ' is over the element processing limit']]
+  }
 
   let lastName = "";
   let lastCount = 1;
@@ -243,13 +301,13 @@ function processFormula(formula, subprocess) {
 
       lastName = n;
   }
-  
+
   let namesFinal = namesCombined.join(', ');
-  
+
   if (subprocess !== false) {
     for (let i = 0; i < compoundLookupKeys.length; i++) {
       let c = compoundLookupKeys[i];
-    
+
       let p = processFormula(c, false);
 
       if (namesFinal === p[0]) { // if (namesFinal.indexOf(p[0]) !== -1) {
@@ -258,23 +316,40 @@ function processFormula(formula, subprocess) {
     }
 
     if (namesFinal === namesCombined.join(', ') && namesFinal.replace(/[^,]/g, "").length === 1) {
-      let compoundName = namesCombined.join(' ');
+      let newNames = namesCombined.slice(0);
 
-      compoundName = compoundName.replace(/Oxygen/g, 'Monoxide');
-      compoundName = compoundName.replace(/Monoxide \(x2\)/g, 'Dioxide');
-      compoundName = compoundName.replace(/Monoxide \(x3\)/g, 'Trioxide');
-      compoundName = compoundName.replace(/Monoxide \(x4\)/g, 'Tetroxide');
+      console.log(newNames);
 
-      compoundName = compoundName.replace(/Nitrogen \(x2\)/g, 'Dinitrogen');
+      for (let i = 0; i < newNames.length; i++) {
+        newNames[i] = newNames[i].replace(/ygen\b/, 'ide');
+        newNames[i] = newNames[i].replace(/ine\b/, 'ide');
 
-      compoundName = compoundName.replace(/ine/g, 'ide');
+        if (i !== 0) {
+          newNames[i] = newNames[i].replace(/^([A-Za-z]{1,})$/, function (_, el) {
+            let prefix = el[0] === "O" ? "Mon" : "Mono";
 
-      namesFinal = `${compoundName}* - ${namesFinal}`;
+            return prefix + el.toLowerCase();
+          });
+        }
+
+        newNames[i] = newNames[i].replace(/^([A-Za-z]{1,}) \(x([0-9]{1,3})\)/, function (_, el, count) {
+          let numPrefix = genNumPrefixes[parseInt(count)].replace('a', '');
+          numPrefix = numPrefix[0].toUpperCase() + numPrefix.slice(1).toLowerCase(); // Sentance Case
+
+          el = el.toLowerCase();
+
+          return numPrefix + el;
+        });
+      }
+
+      console.log(newNames);
+
+      namesFinal = `${newNames.join(' ')}* - ${namesFinal}`;
     }
   }
 
   console.log(namesFinal, elements);
-  
+
   return [namesFinal, totalMass === 0 ? "" : parseFloat(totalMass.toPrecision(5))];
 }
 
@@ -293,14 +368,14 @@ f.oninput = function() {
     document.getElementById("elements").style.color = "#B71C1C";
     document.getElementById("mass").style.color = "#B71C1C";
 
-    document.getElementById("elements-bold").innerText = result[1];
-    document.getElementById("elements-body").innerText = ` is not recognised`;
+    document.getElementById("elements-bold").innerText = result[1][0];
+    document.getElementById("elements-body").innerText = result[1][1];
 
     document.getElementById("mass").innerText = "Error";
 
     return;
   }
-  
+
   document.getElementById("elements").style.color = "";
   document.getElementById("mass").style.color = "";
 

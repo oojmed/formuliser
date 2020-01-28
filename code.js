@@ -438,13 +438,13 @@ async function registerSW() {
 
   if ('serviceWorker' in navigator) {
     try {
-      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+      /* navigator.serviceWorker.getRegistrations().then(function(registrations) {
         for (let i = 0; i < registrations.length; i++) {
           registrations[i].unregister().then(function(success) {
             //updateSnackbar.open();
           });
         }
-      });
+      }); */
 
       navigator.serviceWorker.register('/sw.js').then(reg => {
         reg.addEventListener('updatefound', () => {
@@ -454,7 +454,7 @@ async function registerSW() {
             switch (newWorker.state) {
               case 'installed':
                 if (navigator.serviceWorker.controller) {
-                  updateSnackbar.open();
+                  // Show Update Prompt
                 }
 
                 break;

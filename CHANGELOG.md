@@ -5,6 +5,15 @@
 
 ---
 
+## v6.0.0-Dev
+
+### Features
+- PWA
+
+### Fixes
+- Fixed bracket multipliers adding instead of multiplying
+
+
 ## v5.0.0
 
 ### Features

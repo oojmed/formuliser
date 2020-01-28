@@ -261,7 +261,7 @@ function processFormula(formula, subprocess) {
       multi.pop();
     } else if (symbols[i][0] === ")") {
       let num = parseFloat(symbols[i].slice(1));
-      num = isNaN(num) ? 0 : num;
+      num = isNaN(num) ? 1 : num;
 
       multi.push(num);
     } else {
@@ -269,10 +269,12 @@ function processFormula(formula, subprocess) {
       let num = parseFloat(split.slice(1).join(''));
       num = isNaN(num) ? 1 : num;
 
-      let mul = multi.reduce((a, b) => a + b, 0);
+      let mul = multi.reduce((a, b) => a * b, 1);
       mul = mul === 0 ? 1 : mul;
 
       clone.unshift(split[0] + (num * mul).toString());
+
+      if (subprocess !== false) console.log(num, mul, multi, clone);
     }
   }
 
@@ -426,3 +428,42 @@ document.onclick = function(e) {
 
     // document.getElementById('formula').focus();
 };
+
+registerSW();
+
+async function registerSW() {
+  if (location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.hostname === '') {
+    return false; // Disallow registering service worker on localhost
+  }
+
+  if ('serviceWorker' in navigator) {
+    try {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for (let i = 0; i < registrations.length; i++) {
+          registrations[i].unregister().then(function(success) {
+            //updateSnackbar.open();
+          });
+        }
+      });
+
+      navigator.serviceWorker.register('/sw.js').then(reg => {
+        reg.addEventListener('updatefound', () => {
+          newWorker = reg.installing;
+
+          newWorker.addEventListener('statechange', () => {
+            switch (newWorker.state) {
+              case 'installed':
+                if (navigator.serviceWorker.controller) {
+                  updateSnackbar.open();
+                }
+
+                break;
+            }
+          });
+        });
+      });
+    } catch(e) {
+      console.warn('SW registration failed');
+    }
+  }
+}

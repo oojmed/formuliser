@@ -1,0 +1,29 @@
+{
+    "short_name": "Formuliser",
+    "name": "Formuliser",
+
+    "icons": [
+        {
+          "src": "./icons/logo_192.png",
+          "type": "image/png",
+          "sizes": "192x192",
+          "purpose": "maskable any"
+        },
+        {
+          "src": "./icons/logo_512.png",
+          "type": "image/png",
+          "sizes": "512x512",
+          "purpose": "maskable any"
+        }
+    ],
+
+    "start_url": "/",
+
+    "background_color": "#1f1f1f",
+    "theme_color": "#1f1f1f",
+
+    "display": "standalone",
+    "orientation": "portrait",
+
+    "description": "Get info on chemical formulae."
+}

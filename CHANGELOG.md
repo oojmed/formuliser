@@ -10,6 +10,10 @@
 ### Features
 - PWA
 
+### Changes
+- Links now have nice colors
+- Small QOL and accessibility improvements
+
 ### Fixes
 - Fixed bracket multipliers adding instead of multiplying
 

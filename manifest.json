@@ -6,14 +6,12 @@
         {
           "src": "./icons/logo_192.png",
           "type": "image/png",
-          "sizes": "192x192",
-          "purpose": "maskable any"
+          "sizes": "192x192"
         },
         {
           "src": "./icons/logo_512.png",
           "type": "image/png",
-          "sizes": "512x512",
-          "purpose": "maskable any"
+          "sizes": "512x512"
         }
     ],
 

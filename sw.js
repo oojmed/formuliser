@@ -1,13 +1,13 @@
 const baseCacheName = 'Formuliser';
-const versionName = 'v6.0.0-Beta-5';
+const versionName = 'v6.0.0-Beta-6';
 const cacheName = baseCacheName + '-' + versionName;
 const runtimeCacheName = cacheName + '-runtime';
 
 const staticAssets = [
   '/',
   '/index.html',
-  '/?homescreen=1',
-  '/index.html?homescreen=1',
+  // '/?homescreen=1',
+  // '/index.html?homescreen=1',
 
   '/styles.css',
   '/code.js',

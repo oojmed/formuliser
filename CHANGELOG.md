@@ -12,6 +12,7 @@
 
 ### Changes
 - Links now have nice colors
+- Bottom right information and mass offsets are now in pixels and not percentages
 - Small QOL and accessibility improvements
 
 ### Fixes

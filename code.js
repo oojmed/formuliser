@@ -429,6 +429,10 @@ document.onclick = function(e) {
     // document.getElementById('formula').focus();
 };
 
+document.getElementById("refresh").onclick = function() {
+  window.location.href = window.location.href;
+}
+
 registerSW();
 
 async function registerSW() {

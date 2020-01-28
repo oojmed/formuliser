@@ -16,6 +16,8 @@ const staticAssets = [
   '/favicon.ico',
   '/icons/logo_192.png',
   '/icons/logo_512.png',
+
+  'https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en'
 ];
 
 self.addEventListener('install', event => {

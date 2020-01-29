@@ -1,5 +1,5 @@
 html, body {
-    background-color: #1f1f1f;
+    background-color: #181a1b !important;
     color: rgba(255, 255, 255, .87);
     font-family: Roboto, sans-serif;
 }
@@ -47,9 +47,9 @@ a:visited {
     left: 25%;
 
     width: 50%;
-    
+
     color: rgba(255, 255, 255, .8);
-    
+
     font-size: 48px;
 }
 
@@ -86,29 +86,22 @@ a:visited {
     background-color: rgba(255, 255, 255, .1);*/
 }
 
-#update.show {
-    top: 8px;
-}
-
-@media (max-width: 900px) {
-    #update.show + #info {
-        top: 45px;
-    }
-}
-
 #update {
     position: absolute;
+    /* display: none; */
 
-    top: -40px;
+    top: -50px;
 
     height: 35px;
 
     width: 50%;
     left: 25%;
 
-    background-color: #3f3f3f;
+    background-color: rgb(60, 64, 66);
 
     border-radius: 2px;
+    border: 3px solid rgb(93, 93, 93);
+
     box-shadow: 0px 0px 5px rgba(0, 0, 0, .5);
 
     transition: all 1s;
@@ -128,22 +121,12 @@ a:visited {
     margin-left: 10px;
 }
 
-@media (max-width: 900px) {
-    #update {
-        width: 75%;
-        left: 12.5%;
-    }
-}
-
-@media (max-width: 600px) {
-    #update {
-        width: 95%;
-        left: 2.5%;
-    }
+#update.show {
+    top: 8px;
 }
 
 button {
-    background-color: #4f4f4f;
+    background-color: rgb(80, 84, 86);
     color: rgba(255, 255, 255, .87);
 
     border: none;
@@ -159,4 +142,22 @@ button {
 button:hover {
     background-color: #6f6f6f;
     color: rgba(255, 255, 255, 1);
+}
+
+@media (max-width: 900px) {
+    #update {
+        width: 75%;
+        left: 12.5%;
+    }
+
+    #update.show + #info {
+        top: 45px;
+    }
+}
+
+@media (max-width: 600px) {
+    #update {
+        width: 95%;
+        left: 2.5%;
+    }
 }

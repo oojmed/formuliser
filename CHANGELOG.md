@@ -14,6 +14,7 @@
 - Links now have nice(r) colors
 - Information and mass offsets are now in pixels and not percentages
 - Information is now in the top right corner
+- Updated UI to have colder and less bright darks
 - Small QOL and accessibility improvements
 
 ### Fixes

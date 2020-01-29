@@ -13,13 +13,15 @@ html, body {
 
     position: absolute;
 
-    bottom: 8px;
+    top: 8px;
     right: 10px;
 
     color: rgba(255, 255, 255, .7);
     text-shadow: 0px 0px 10px black;
 
     font-size: 16px;
+
+    transition: all 1s;
 }
 
 a {
@@ -84,10 +86,20 @@ a:visited {
     background-color: rgba(255, 255, 255, .1);*/
 }
 
+#update.show {
+    top: 8px;
+}
+
+@media (max-width: 900px) {
+    #update.show + #info {
+        top: 45px;
+    }
+}
+
 #update {
     position: absolute;
 
-    top: 8px;
+    top: -40px;
 
     height: 35px;
 
@@ -97,6 +109,7 @@ a:visited {
     background-color: #3f3f3f;
 
     border-radius: 2px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, .5);
 
     transition: all 1s;
 }

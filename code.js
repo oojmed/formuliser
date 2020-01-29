@@ -458,7 +458,7 @@ async function registerSW() {
             switch (newWorker.state) {
               case 'installed':
                 if (navigator.serviceWorker.controller) {
-                  // Show Update Prompt
+                  document.getElementById("update").className = "show"; // Show Update Prompt
                 }
 
                 break;

@@ -11,8 +11,9 @@
 - PWA
 
 ### Changes
-- Links now have nice colors
-- Bottom right information and mass offsets are now in pixels and not percentages
+- Links now have nice(r) colors
+- Information and mass offsets are now in pixels and not percentages
+- Information is now in the top right corner
 - Small QOL and accessibility improvements
 
 ### Fixes

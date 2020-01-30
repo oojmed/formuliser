@@ -238,7 +238,7 @@ function processFormula(formula, subprocess) {
 
     let processed = processFormula(reverseCompoundFormula);
 
-    return [processed[0].split(' - ')[1], processed[1]];
+    return [`${reverseCompoundFormula} - ${processed[0].split(' - ')[1]}`, processed[1]];
   }
 
   formula = formula.replace(/ /g, '');

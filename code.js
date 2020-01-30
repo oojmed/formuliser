@@ -431,7 +431,7 @@ document.onclick = function(e) {
 
 document.getElementById("refresh").onclick = function() {
   window.location.href = window.location.href;
-}
+};
 
 document.getElementById("install").onclick = function() {
   showSnackbar();
@@ -448,7 +448,43 @@ document.getElementById("install").onclick = function() {
       }
       deferredPrompt = null;
     });
+};
+
+document.getElementById("no-install").onclick = function() {
+  showSnackbar();
+};
+
+let snackbars = ["update", "install"];
+
+function showSnackbar(name) {
+  let c = document.getElementById("snackbar").className;
+
+  document.getElementById("snackbar").className = "";
+
+  if (name !== undefined) {
+    setTimeout(function() {
+      for (const s of snackbars.filter(x => x !== name)) {
+        document.getElementById(`snackbar-${s}`).className = "";
+      }
+
+      document.getElementById("snackbar").className = "show";
+
+      document.getElementById("snackbar-" + name).className = "show";
+    }, c === "" ? 0 : 1000);
+  }
 }
+
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  // Prevent Chrome 76 and later from showing the mini-infobar
+  e.preventDefault();
+
+  // Stash the event so it can be triggered later.
+  deferredPrompt = e;
+
+  showSnackbar("install");
+});
 
 registerSW();
 
@@ -488,35 +524,3 @@ async function registerSW() {
     }
   }
 }
-
-let snackbars = ["update", "install"];
-
-function showSnackbar(name) {
-  let c = document.getElementById("snackbar").className;
-
-  document.getElementById("snackbar").className = "";
-
-  if (name !== undefined) {
-    setTimeout(function() {
-      for (const s of snackbars.filter(x => x !== name)) {
-        document.getElementById(`snackbar-${s}`).className = "";
-      }
-
-      document.getElementById("snackbar").className = "show";
-
-      document.getElementById("snackbar-" + name).className = "show";
-    }, c === "" ? 0 : 1000);
-  }
-}
-
-let deferredPrompt;
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  // Prevent Chrome 76 and later from showing the mini-infobar
-  e.preventDefault();
-
-  // Stash the event so it can be triggered later.
-  deferredPrompt = e;
-
-  showSnackbar("install");
-});

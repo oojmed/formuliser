@@ -5,7 +5,7 @@
 
 ---
 
-## v6.0.0-Dev
+## v6.0.0
 
 ### Features
 - PWA

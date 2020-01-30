@@ -483,7 +483,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
   // Stash the event so it can be triggered later.
   deferredPrompt = e;
 
-  if (Date.now() - localStorage.getItem('asked') > 36000000) {
+  if (Date.now() - localStorage.getItem('asked') > 3600000) {
     localStorage.setItem('asked', Date.now());
 
     showSnackbar("install");

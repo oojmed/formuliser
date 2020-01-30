@@ -214,8 +214,8 @@ let genNumPrefixes = [
 let f = document.getElementById('formula');
 f.focus();
 
-f.onblur = function(e) {
-  document.getElementById('formula').focus();
+document.onkeydown = function() {
+  f.focus();
 };
 
 function processFormula(formula, subprocess) {

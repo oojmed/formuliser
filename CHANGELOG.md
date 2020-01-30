@@ -17,6 +17,7 @@
 - Updated UI to have colder and less bright darks
 - Show formula when typing in a compound name
 - Reposition the formula to be higher
+- No longer focus on input immediately when it loses focus, as this disallows highlighting text, now only focus on key press
 - Small QOL and accessibility improvements
 
 ### Fixes

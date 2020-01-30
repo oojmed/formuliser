@@ -483,12 +483,27 @@ window.addEventListener('beforeinstallprompt', (e) => {
   // Stash the event so it can be triggered later.
   deferredPrompt = e;
 
-  if (Date.now() - localStorage.getItem('asked') > 3600000) {
+  checkToShowInstallPrompt();
+});
+
+function checkToShowInstallPrompt() {
+  if (localStorage.getItem('asked') === null) { // First time
     localStorage.setItem('asked', Date.now());
 
-    showSnackbar("install");
+    setTimeout(showInstallPrompt, 60000);
+    return;
   }
-});
+
+  if (Date.now() - localStorage.getItem('asked') > 86400000) { // Only ask daily
+    showInstallPrompt();
+  }
+}
+
+function showInstallPrompt() {
+  localStorage.setItem('asked', Date.now());
+
+  showSnackbar("install");
+}
 
 registerSW();
 

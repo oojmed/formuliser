@@ -21,7 +21,7 @@ html, body {
 
     font-size: 16px;
 
-    transition: all 1s;
+    transition: all .5s;
 }
 
 a {
@@ -86,7 +86,15 @@ a:visited {
     background-color: rgba(255, 255, 255, .1);*/
 }
 
-#update {
+#snackbar-update, #snackbar-install {
+    display: none;
+}
+
+#snackbar-update.show, #snackbar-install.show {
+    display: block;
+}
+
+#snackbar {
     position: absolute;
     /* display: none; */
 
@@ -107,21 +115,21 @@ a:visited {
     transition: all 1s;
 }
 
-#update * {
+#snackbar * > * {
     margin-top: 6px;
 }
 
-#update button {
+#snackbar button {
     float: right;
     margin-right: 10px;
 }
 
-#update p {
+#snackbar p {
     display: inline-block;
     margin-left: 10px;
 }
 
-#update.show {
+#snackbar.show {
     top: 8px;
 }
 
@@ -145,18 +153,18 @@ button:hover {
 }
 
 @media (max-width: 900px) {
-    #update {
+    #snackbar {
         width: 75%;
         left: 12.5%;
     }
 
-    #update.show + #info {
-        top: 45px;
+    #snackbar.show + #info {
+        top: 50px;
     }
 }
 
 @media (max-width: 600px) {
-    #update {
+    #snackbar {
         width: 95%;
         left: 2.5%;
     }

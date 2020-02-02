@@ -5,6 +5,17 @@
 
 ---
 
+## v7
+
+### Features
+- Now show the element's symbol when doing a reverse symbol lookup
+- Added missing elements:
+    - Unbibium
+    - Unbihexium
+    - Unbipentium
+    - Unbiquadium
+    - Unbitrium
+
 ## v6.0.0
 
 ### Features

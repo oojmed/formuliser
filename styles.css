@@ -8,22 +8,6 @@ html, body {
     font-family: Roboto, sans-serif;
 }
 
-#info {
-    z-index: -1;
-
-    position: absolute;
-
-    top: 8px;
-    right: 10px;
-
-    color: rgba(255, 255, 255, .7);
-    text-shadow: 0px 0px 10px black;
-
-    font-size: 16px;
-
-    transition: all .5s;
-}
-
 a {
     color: rgba(150, 150, 255, .87);
 }
@@ -133,6 +117,103 @@ a:visited {
     top: 8px;
 }
 
+#options {
+    position: absolute;
+
+    left: 0px;
+
+    width: calc(100%);
+    top: calc(-20px - 150px - 6px);
+
+    transition: all 1s;
+
+    z-index: 1;
+
+    pointer-events: none;
+}
+
+#options-panel {
+    margin: auto;
+    width: 50%;
+
+    height: 150px;
+
+    background-color: rgba(100, 102, 104, .5);
+
+    border-radius: 2px;
+    border: 3px solid rgba(100, 102, 104, .75);
+
+    padding: 10px;
+
+    text-align: center;
+
+    pointer-events: all;
+
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, .5);
+
+    z-index: 9;
+}
+
+#options.show {
+    top: 10px;
+}
+
+#options-drawer {
+    cursor: pointer;
+
+    margin: auto;
+
+    width: 20px;
+    height: 20px;
+
+    padding-left: 6px;
+    padding-bottom: 6px;
+
+    font-size: 18px;
+    line-height: 25px;
+
+    background-color: rgba(100, 102, 104, .6);
+
+    border: 3px solid rgba(100, 102, 104, .75);
+    border-top: none;
+    border-radius: 0px 0px 2px 2px;
+
+    color: rgba(255, 255, 255, .8);
+
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, .5);
+
+    pointer-events: all;
+
+    opacity: 0.3;
+}
+
+#options-drawer:hover {
+    opacity: 0.5;
+}
+
+#info {
+    margin-bottom: 20px;
+}
+
+#info > * {
+    display: block;
+}
+
+#other-switches {
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+#on-enter-switches {
+    margin-top: 5px;
+    width: 100%;
+}
+
+#on-enter-switches > * {
+    width: 45%;
+    display: inline-block;
+}
+
 button {
     background-color: rgb(80, 84, 86);
     color: rgba(255, 255, 255, .87);
@@ -152,14 +233,75 @@ button:hover {
     color: rgba(255, 255, 255, 1);
 }
 
+.switch {
+    position: relative;
+    display: inline-block;
+
+    width: 30px;
+    height: 17px;
+
+    top: 2px;
+
+    margin-right: 3px;
+}
+
+.switch input {
+    opacity: 0;
+
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    background-color: rgba(120, 122, 120, .7);
+
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+
+    content: "";
+
+    height: 13px;
+    width: 13px;
+
+    left: 2px;
+    bottom: 2px;
+
+    background-color: rgba(40, 42, 44, .8);
+
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: rgba(180, 182, 184, .9);
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(13px);
+    -ms-transform: translateX(13px);
+    transform: translateX(13px);
+}
+
 @media (max-width: 900px) {
     #snackbar {
         width: 75%;
         left: 12.5%;
-    }
-
-    #snackbar.show + #info {
-        top: 50px;
     }
 }
 
@@ -168,4 +310,83 @@ button:hover {
         width: 95%;
         left: 2.5%;
     }
+
+    #options-panel {
+        width: 80%;
+    }
+}
+
+
+#visualisation {
+    position: absolute;
+
+    top: 25%;
+    width: 50%;
+
+    left: 25%;
+    height: 50%;
+
+    z-index: -10;
+}
+
+ #nucleus {
+    position: absolute;
+
+    width: 25%;
+    height: 30%;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: yellow;
+    border-radius: 50%;
+}
+
+#ring-1 {
+    position: absolute;
+
+    width: 40%;
+    height: 50%;
+
+    top: 50%;
+    left: 50%;
+
+    border-radius: 50%;
+
+    background-color: transparent;
+
+    border: 10px solid rgba(10, 12, 14, .5);
+
+    transform: translate(-50%, -50%);
+
+    z-index: -99;
+}
+
+#electron-1 {
+    position: relative;
+
+    top: -15px;
+    left: calc(50% - 10px);
+
+    width: 20px;
+    height: 20px;
+
+    border-radius: 50%;
+
+    background-color: red;
+}
+
+#electron-8 {
+    position: relative;
+
+    top: calc(100% - 25px);
+    left: calc(50% - 10px);
+
+    width: 20px;
+    height: 20px;
+
+    border-radius: 50%;
+
+    background-color: red;
 }

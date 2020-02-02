@@ -55,6 +55,43 @@
 
     <div id="mass"></div>
 
+    <div id="options">
+        <div id="options-panel">
+            <div id="info">
+                Formuliser v7 (dev1)
+                <a href="https://github.com/oojmed/formuliser">Source (GitHub)</a>
+            </div>
+
+            <div id="other-switches">
+                <label class="switch">
+                    <input id="install-switch" type="checkbox" checked>
+                    <span class="slider"></span>
+                </label> Install Prompts
+            </div>
+
+            On Enter:
+            <div id="on-enter-switches">
+                <span id="switch-container">
+                    <label class="switch">
+                        <input id="simplify-switch" type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label> Simplify
+                </span>
+
+                <span id="switch-container">
+                    <label class="switch">
+                        <input id="reverse-switch" type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label> Reverse
+                </span>
+            </div>
+        </div>
+
+        <div id="options-drawer">
+            ⋁
+        </div>
+    </div>
+
     <div id="snackbar">
         <div id="snackbar-update">
             <p>Updates have been installed</p>
@@ -68,7 +105,20 @@
         </div>
     </div>
 
-    <div id="info">
-        Formuliser v6 (f3) - <a href="https://github.com/oojmed/formuliser">Source</a>
+
+    <div style="display: none;" id="visualisation">
+        <div id="nucleus">
+
+        </div>
+
+        <div class="ring" id="ring-1">
+            <div class="electron" id="electron-1"></div>
+            <div class="electron" id="electron-8"></div>
+        </div>
+
+        <div class="ring" id="ring-1">
+            <div class="electron"></div>
+            <div class="electron"></div>
+        </div>
     </div>
 </body>

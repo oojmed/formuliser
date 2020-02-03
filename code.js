@@ -270,9 +270,7 @@ function simplifyFormula(formula) {
 }
 
 function processFormula(formula, subprocess) {
-  for (let i = 0; i < scriptsLookupKeys.length; i++) {
-    formula = formula.replace(new RegExp(scriptsLookupKeys[i], 'gm'), scriptsLookup[scriptsLookupKeys[i]]);
-  }
+  formula = unsubscriptise(formula);
 
   formula = formula.replace(/[^a-z0-9 \(\)]/gmi, '');
 
@@ -293,7 +291,7 @@ function processFormula(formula, subprocess) {
 
     let processed = processFormula(reverseCompoundFormula);
 
-    return [`${reverseCompoundFormula} - ${processed[0].split(' - ')[1]}`, processed[1]];
+    return [`${subscriptise(reverseCompoundFormula)} - ${processed[0].split(' - ')[1]}`, processed[1]];
   }
 
   formula = formula.replace(/ /g, '');
@@ -413,9 +411,7 @@ f.onkeypress = function(e) {
   if (e.key === 'Enter') {
     let formula = f.value;
 
-    for (let i = 0; i < scriptsLookupKeys.length; i++) {
-      formula = formula.replace(new RegExp(scriptsLookupKeys[i], 'gm'), scriptsLookup[scriptsLookupKeys[i]]);
-    }
+    formula = unsubscriptise(formula);
 
     formula = formula.replace(/[^a-z0-9 \(\)]/gmi, '');
 
@@ -447,12 +443,26 @@ f.onkeypress = function(e) {
   }
 };
 
-function interpretInput() {
-  let value = f.value;
+function unsubscriptise(value) {
+  for (let i = 0; i < scriptsLookupKeys.length; i++) {
+    value = value.replace(new RegExp(scriptsLookupKeys[i], 'gm'), scriptsLookup[scriptsLookupKeys[i]]);
+  }
 
+  return value;
+}
+
+function subscriptise(value) {
   for (let i = 0; i < scriptsLookupKeys.length; i++) {
     value = value.replace(new RegExp(scriptsLookup[scriptsLookupKeys[i]], 'gm'), scriptsLookupKeys[i]);
   }
+
+  return value;
+}
+
+function interpretInput() {
+  let value = f.value;
+
+  value = subscriptise(value);
 
   let s = f.selectionStart;
 

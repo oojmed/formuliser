@@ -1,5 +1,5 @@
 const baseCacheName = 'Formuliser';
-const versionName = 'v7_rc1';
+const versionName = 'v7_rc2';
 const cacheName = baseCacheName + '-' + versionName;
 const runtimeCacheName = cacheName + '-runtime';
 

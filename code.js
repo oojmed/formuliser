@@ -281,6 +281,8 @@ function processFormula(formula, subprocess) {
   if (reverseElement !== undefined) {
     let reverseSymbol = Object.keys(periodicLookup)[Object.values(periodicLookup).indexOf(reverseElement)];
 
+    // visualiseAtom(reverseElement.atomic);
+
     return [reverseSymbol, reverseElement.mass];
   }
 
@@ -630,5 +632,107 @@ async function registerSW() {
     } catch(e) {
       console.warn('SW registration failed');
     }
+  }
+}
+
+
+function updateLayout(listItems) {
+  for (var i = 0; i < listItems.length; i++) {
+    let offsetAngle = 360 / listItems.length;
+    let rotateAngle = offsetAngle * i;
+
+    let size = listItems[0].parentNode.offsetWidth;
+    size /= 2.025;
+
+    let r = parseFloat(listItems[0].parentNode.id.replace('ring-', ''));
+
+    let m = listItems.length - 1;
+
+    let o = (-(1 / Math.pow(m / 2, 2)) * Math.pow(i - m, 2) + 4) / 4;
+    o *= (1.5 * (r - 1));
+    o *= 1.5;
+
+    console.log(i, r, m, Math.round(o), size);
+
+    size += o;
+
+    size = Math.round(size);
+
+    console.log(listItems[0].parentNode.id, listItems[0].parentNode.offsetWidth, size);
+
+    listItems[i].style.transform = `rotate(${rotateAngle}deg) translate(0, -${size}px) rotate(-${rotateAngle}deg)`;
+  }
+}
+
+function addElectron(par) {
+  let el = document.createElement('li');
+  el.className = 'electron';
+
+  par.appendChild(el);
+
+  updateLayout([].slice.call(par.children));
+
+  return el;
+}
+
+function addRing(par, n) {
+  let el = document.createElement('ul');
+  el.className = 'ring';
+  el.id = `ring-${n}`;
+
+  par.appendChild(el);
+
+  return el;
+}
+
+function addNucleus(par) {
+  let el = document.createElement('div');
+  el.id = 'nucleus';
+
+  par.appendChild(el);
+
+  return el;
+}
+
+function getRing(electron) {
+  let o = 0;
+
+  for (let i = 1; i < 9999; i++) {
+    let c = Math.pow(i, 2) * 2;
+
+    if (electron <= o + c) {
+      return i;
+    }
+
+    o += c;
+  }
+}
+
+function visualiseAtom(electronCount) {
+  if (electronCount < 1) {
+    return;
+  }
+
+  let parent = document.getElementById('visualisation');
+  parent.innerHTML = '';
+
+  let nucleus = addNucleus(parent);
+
+  let ringCount = getRing(electronCount);
+
+  let rings = [];
+
+  for (let i = 1; i <= ringCount; i++) {
+    rings.push(addRing(parent, i));
+  }
+
+  for (let i = 1; i <= electronCount; i++) {
+    let ring = getRing(i);
+
+    addElectron(rings[ring - 1]);
+  }
+
+  for (let i = 0; i < ringCount; i++) {
+    updateLayout(rings[i]);
   }
 }

@@ -8,6 +8,11 @@
 ## v7
 
 ### Features
+- Added panel at top
+    - Moved info into panel
+- Added new on enter features:
+    - Reverse
+    - Simplify
 - Now show the element's symbol when doing a reverse symbol lookup
 - Added missing elements:
     - Unbibium

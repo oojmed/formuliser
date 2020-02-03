@@ -138,10 +138,10 @@ a:visited {
 
     height: 150px;
 
-    background-color: rgba(100, 102, 104, .5);
+    background-color: rgba(61, 65, 68, 0.5);
 
     border-radius: 2px;
-    border: 3px solid rgba(100, 102, 104, .75);
+    border: 3px solid rgba(80, 82, 84, 0.75);
 
     padding: 10px;
 
@@ -163,7 +163,7 @@ a:visited {
 
     margin: auto;
 
-    width: 20px;
+    width: 20.5px;
     height: 20px;
 
     padding-left: 6px;
@@ -320,11 +320,13 @@ input:checked + .slider:before {
 #visualisation {
     position: absolute;
 
-    top: 25%;
-    width: 50%;
+    width: 90%;
+    height: 90%;
 
-    left: 25%;
-    height: 50%;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
 
     z-index: -10;
 }
@@ -332,38 +334,71 @@ input:checked + .slider:before {
  #nucleus {
     position: absolute;
 
-    width: 25%;
-    height: 30%;
+    width: 150px;
+    height: 150px;
 
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+
+    margin: -75px 0 0 -75px;
 
     background-color: yellow;
     border-radius: 50%;
 }
 
-#ring-1 {
+.ring {
     position: absolute;
 
-    width: 40%;
-    height: 50%;
+    width: 300px;
+    height: 300px;
 
     top: 50%;
     left: 50%;
 
+    margin: -160px 0 0 -160px;
+
     border-radius: 50%;
-
-    background-color: transparent;
-
-    border: 10px solid rgba(10, 12, 14, .5);
-
-    transform: translate(-50%, -50%);
+    border: 10px solid rgba(10, 12, 255, .9);
 
     z-index: -99;
+
+    padding: 0;
 }
 
-#electron-1 {
+#ring-2 {
+    width: 400px;
+    height: 400px;
+
+    margin: -210px 0 0 -210px;
+}
+
+#ring-3 {
+    width: 450px;
+    height: 450px;
+
+    margin: -235px 0 0 -235px;
+}
+
+.electron {
+    list-style: none;
+
+    width: 20px;
+    height: 20px;
+
+    position: absolute;
+
+    background-color: red;
+
+    border-radius: 50%;
+
+    margin-top: -5px;
+
+    top: 50%;
+    left: 50%;
+}
+
+/*
+.electron {
     position: relative;
 
     top: -15px;
@@ -377,16 +412,23 @@ input:checked + .slider:before {
     background-color: red;
 }
 
-#electron-8 {
-    position: relative;
+#electron-2 {
+    top: calc(5% - 22.5px);
+    left: calc(75% - 0px);
+}
 
+#electron-3 {
+    top: calc(90% - 22.5px);
+    left: calc(75% - 0px);
+}
+
+#electron-4 {
+    top: calc(75% - 5px);
+    left: calc(75% - 0px);
+}
+
+#electron-5 {
     top: calc(100% - 25px);
     left: calc(50% - 10px);
-
-    width: 20px;
-    height: 20px;
-
-    border-radius: 50%;
-
-    background-color: red;
 }
+*/

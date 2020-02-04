@@ -231,11 +231,18 @@ function simplifyFormula(formula) {
   let symbols = formula.split(/(?=[A-Z\(\)])/);
 
   let multi = [];
+  let next = 0;
 
   let clone = [];
 
+  console.log(symbols);
+
   for (let i = symbols.length - 1; i >= 0; i--) {
-    if (symbols[i] === "(") {
+    if (symbols[i][0] === "(") {
+      if (symbols[i] !== "(") {
+        next = parseFloat(symbols[i].slice(1)) - 1;
+      }
+
       if (multi.length === 0) {
         return [false, ['', 'Brackets not ending']];
       }
@@ -254,11 +261,13 @@ function simplifyFormula(formula) {
       let mul = multi.reduce((a, b) => a * b, 1);
       mul = mul === 0 ? 1 : mul;
 
-      let final = num * mul;
+      let final = (num * mul) + next;
       final = final === 1 ? '' : final;
       final = final.toString();
 
       clone.unshift(split[0] + final);
+
+      next = 0;
     }
   }
 

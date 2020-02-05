@@ -8,6 +8,18 @@
 ## v8
 
 ### Features
+- Added 10 new compounds (50 > 60 total):
+  - Silica aerogel (C23H22N2O3S2)
+  - Lactose (C12H22O11)
+  - Barrelene (C8H8)
+  - Dodecahedrane (C20H20)
+  - Housane (C5H8)
+  - Prismane (C6H6)
+  - Quadratic Acid (C4H2O4)
+  - Bullvalene (C10H10)
+  - Dickite (Al2Si2O5(OH)4)
+  - Penguinone (C10H14O)
+
 - Added compound panel with:
     - Compound search
     - List of compounds

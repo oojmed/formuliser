@@ -176,7 +176,17 @@ let compoundLookup = {
 'B3N3H6': 'Borazine',
 'BaFeSi4O10': 'Gillespite',
 'BaSO4': 'Barite',
-'CHCl3': 'Chloroform'
+'CHCl3': 'Chloroform',
+'C23H22N2O3S2': 'Silica aerogel',
+'C12H22O11': 'Lactose',
+'C8H8': 'Barrelene',
+'C20H20': 'Dodecahedrane',
+'C5H8': 'Housane',
+'C6H6': 'Prismane',
+'C4H2O4': 'Quadratic Acid',
+'C10H10': 'Bullvalene',
+'Al2Si2O5(OH)4': 'Dickite',
+'C10H14O': 'Penguinone'
 };
 let compoundLookupKeys = Object.keys(compoundLookup);
 let compoundLookupValues = Object.values(compoundLookup);

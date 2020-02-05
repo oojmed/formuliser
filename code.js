@@ -184,7 +184,7 @@ let compoundLookupValues = Object.values(compoundLookup);
 
 // window.periodicLookupKeys = Object.keys(window.lookup);
 
-let scriptsLookup = {'\u2080': '0', '\u2081': '1', '\u2082': '2', '\u2083': '3', '\u2084': '4', '\u2085': '5', '\u2086': '6', '\u2087': '7', '\u2088': '8', '\u2089': '9', '\u2070': '0', '\u00B9': '1', '\u00B2': '2', '\u00B3': '3', '\u2074': '4', '\u2075': '5', '\u2076': '6', '\u2077': '7', '\u2078': '8', '\u2079': '9'};
+let scriptsLookup = {'\u2080': '0', '\u2081': '1', '\u2082': '2', '\u2083': '3', '\u2084': '4', '\u2085': '5', '\u2086': '6', '\u2087': '7', '\u2088': '8', '\u2089': '9', '\u2070': '0', '\u00B9': '1', '\u00B2': '2', '\u00B3': '3', '\u2074': '4', '\u2075': '5', '\u2076': '6', '\u2077': '7', '\u2078': '8', '\u2079': '9', '\u208A': '+', '\u208B': '-'};
 let scriptsLookupKeys = Object.keys(scriptsLookup);
 
 let genNumPrefixes = [
@@ -227,6 +227,18 @@ document.onkeydown = function() {
   f.focus();
 };
 
+function evalExp(s) {
+  let m = s.replace(/\s/g, '').match(/[+\-]?([0-9\.]+)/g) || [];
+
+  if (m.length < 1) {
+    return NaN;
+  }
+
+  return m.reduce(function(sum, value) {
+      return parseFloat(sum) + parseFloat(value);
+    });
+}
+
 function simplifyFormula(formula) {
   let symbols = formula.split(/(?=[A-Z\(\)])/);
 
@@ -240,7 +252,10 @@ function simplifyFormula(formula) {
   for (let i = symbols.length - 1; i >= 0; i--) {
     if (symbols[i][0] === "(") {
       if (symbols[i] !== "(") {
-        next = parseFloat(symbols[i].slice(1)) - 1;
+        let num = evalExp(symbols[i].slice(1));
+        num = isNaN(num) ? 1 : num;
+
+        next = num - 1;
       }
 
       if (multi.length === 0) {
@@ -249,13 +264,16 @@ function simplifyFormula(formula) {
 
       multi.pop();
     } else if (symbols[i][0] === ")") {
-      let num = parseFloat(symbols[i].slice(1));
+      let num = evalExp(symbols[i].slice(1));
       num = isNaN(num) ? 1 : num;
 
       multi.push(num);
     } else {
-      let split = symbols[i].split(/(?=[0-9])/)
-      let num = parseFloat(split.slice(1).join(''));
+      let split = symbols[i].split(/(?=[0-9])/);
+
+      let exp = split.slice(1).join('');
+
+      let num = evalExp(exp);
       num = isNaN(num) ? 1 : num;
 
       let mul = multi.reduce((a, b) => a * b, 1);
@@ -281,7 +299,7 @@ function simplifyFormula(formula) {
 function processFormula(formula, subprocess) {
   formula = unsubscriptise(formula);
 
-  formula = formula.replace(/[^a-z0-9 \(\)]/gmi, '');
+  formula = formula.replace(/[^a-z0-9 \(\)\+\-]/gmi, '');
 
   let reverseElement = Object.values(periodicLookup).find(({ name }) => name.toLowerCase() === formula.toLowerCase());
 

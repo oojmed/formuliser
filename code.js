@@ -218,12 +218,17 @@ let genNumPrefixes = [
 let settingSimplify = true;
 let settingReverse = true;
 let settingInstallPrompts = true;
+let settingAutoSubscript = true;
 
 let f = document.getElementById('formula');
 f.focus();
 
 document.onkeydown = function() {
-  f.focus();
+  let focusedId = document.activeElement.id;
+
+  if (focusedId !== 'compound-search' && focusedId !== 'formula') {
+    f.focus();
+  }
 };
 
 function evalExp(s) {
@@ -245,8 +250,6 @@ function simplifyFormula(formula) {
   let next = 0;
 
   let clone = [];
-
-  console.log(symbols);
 
   for (let i = symbols.length - 1; i >= 0; i--) {
     if (symbols[i][0] === "(") {
@@ -494,7 +497,9 @@ function subscriptise(value) {
 function interpretInput() {
   let value = f.value;
 
-  value = subscriptise(value);
+  if (settingAutoSubscript === true) {
+    value = subscriptise(value);
+  }
 
   let s = f.selectionStart;
 
@@ -567,7 +572,7 @@ document.getElementById("install").onclick = function() {
     });
 };
 
-document.getElementById("no-install").onclick = function() {
+document.getElementById("no-snackbar").onclick = function() {
   showSnackbar();
 };
 
@@ -627,11 +632,19 @@ function showInstallPrompt() {
 }
 
 document.getElementById("options-drawer").onclick = function() {
-  showSettingsPanel();
+  showPanel('options');
+};
+
+document.getElementById("compounds-drawer").onclick = function() {
+  showPanel('compounds');
 };
 
 document.getElementById("install-switch").onchange = function() {
   settingInstallPrompts = document.getElementById("install-switch").checked;
+};
+
+document.getElementById("autosub-switch").onchange = function() {
+  settingAutoSubscript = document.getElementById("autosub-switch").checked;
 };
 
 document.getElementById("simplify-switch").onchange = function() {
@@ -641,11 +654,51 @@ document.getElementById("reverse-switch").onchange = function() {
   settingReverse = document.getElementById("reverse-switch").checked;
 };
 
-function showSettingsPanel() {
-  let options = document.getElementById('options');
+function showPanel(id) {
+  let parent = document.getElementById(id);
 
-  options.className = options.className === '' ? 'show' : '';
+  parent.className = parent.className === '' ? 'show' : '';
 }
+
+function generateCompoundList(search) {
+  search = search === undefined ? '' : search;
+
+  document.getElementById('compound-list').innerHTML = '';
+
+  let compounds = [];
+
+  let compoundValuesSorted = Object.values(compoundLookup).sort();
+
+  console.log(compoundValuesSorted);
+
+  for (let i = 0; i < compoundValuesSorted.length; i++) {
+    if (compoundValuesSorted[i].toLowerCase().indexOf(search.toLowerCase()) !== -1) {
+      compounds.push({name: compoundValuesSorted[i],
+        formula: compoundLookupKeys[compoundLookupValues.indexOf(compoundValuesSorted[i])]
+      });
+    }
+  }
+
+  console.log(compounds);
+
+  for (let i = 0; i < compounds.length; i++) {
+    let el = document.createElement('button');
+    el.innerText = compounds[i].name;
+
+    el.onclick = function() {
+      document.getElementById('formula').value = compounds[i].formula;
+      interpretInput();
+    };
+
+    document.getElementById('compound-list').appendChild(el);
+  }
+}
+
+document.getElementById('compound-search').oninput = function() {
+  generateCompoundList(document.getElementById('compound-search').value);
+};
+
+generateCompoundList();
 
 registerSW();
 

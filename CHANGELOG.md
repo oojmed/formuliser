@@ -5,9 +5,25 @@
 
 ---
 
+## v8
+
+### Features
+- Added compound panel with:
+    - Compound search
+    - List of compounds
+- Added option for auto subscriptise (still enabled by default)
+- Added 'No' option to install snackbar
+
+### Changes
+- Make options size constant for large (600px+) size
+
+
 ## v7
 
 ### Features
+- Added support for arthimetic in numbers eg: CO2+1
+- Use subscript when showing formula for compounds when reversing
+- Auto subscript +'s and -'s
 - Added panel at top
     - Moved info into panel
 - Added new on enter features:

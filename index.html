@@ -58,27 +58,36 @@
     <div id="options">
         <div id="options-panel">
             <div id="info">
-                Formuliser v7 (rc5)
+                Formuliser v8 (dev1)
                 <a href="https://github.com/oojmed/formuliser">Source (GitHub)</a>
             </div>
 
-            <div id="other-switches">
-                <label class="switch">
-                    <input id="install-switch" type="checkbox" checked>
-                    <span class="slider"></span>
-                </label> Install Prompts
+            <div class="switches-dual-column" id="other-switches">
+                <span class="switch-container">
+                    <label class="switch">
+                        <input id="install-switch" type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label> Install Prompts
+                </span>
+
+                <span class="switch-container">
+                    <label class="switch">
+                        <input id="autosub-switch" type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label> Auto-subscript
+                </span>
             </div>
 
             On Enter:
-            <div id="on-enter-switches">
-                <span id="switch-container">
+            <div class="switches-dual-column">
+                <span class="switch-container">
                     <label class="switch">
                         <input id="simplify-switch" type="checkbox" checked>
                         <span class="slider"></span>
                     </label> Simplify
                 </span>
 
-                <span id="switch-container">
+                <span class="switch-container">
                     <label class="switch">
                         <input id="reverse-switch" type="checkbox" checked>
                         <span class="slider"></span>
@@ -92,6 +101,20 @@
         </div>
     </div>
 
+    <div id="compounds">
+        <div id="compounds-panel">
+            <input title="Search compound" placeholder="Search compound" type="text" name="compound-search" id="compound-search"></input>
+
+            <div id="compound-list">
+
+            </div>
+        </div>
+
+        <div id="compounds-drawer">
+            <
+        </div>
+    </div>
+
     <div id="snackbar">
         <div id="snackbar-update">
             <p>Updates have been installed</p>
@@ -101,11 +124,8 @@
         <div id="snackbar-install">
             <p>Want to install Formuliser?</p>
             <button type="button" id="install">Install</button>
-            <button type="button" id="no-install">No</button>
         </div>
-    </div>
 
-
-    <div id="visualisation">
+        <button type="button" id="no-snackbar">No</button>
     </div>
 </body>

@@ -172,7 +172,6 @@ let compoundLookup = {
 'AlF6Na3': 'Cryolite',
 'Al2O5Si': 'Andalusite',
 'Al6O13Si2': 'Mullite',
-'Al3F14Na5': 'Chiolite',
 'AsH3': 'Arsine',
 'B3N3H6': 'Borazine',
 'BaFeSi4O10': 'Gillespite',
@@ -363,7 +362,7 @@ function processFormula(formula, subprocess) {
   if (fail) { return [false, [fail, ' is not recongised']]; }
 
   if (elements.length >= 10000) {
-    return [false, [elements.length, ' is over the element processing limit']]
+    return [false, [elements.length, ' is over the element processing limit']];
   }
 
   let lastName = "";
@@ -482,7 +481,11 @@ function unsubscriptise(value) {
 
 function subscriptise(value) {
   for (let i = 0; i < scriptsLookupKeys.length; i++) {
-    value = value.replace(new RegExp(scriptsLookup[scriptsLookupKeys[i]], 'gm'), scriptsLookupKeys[i]);
+    let escape = false;
+    escape = scriptsLookup[scriptsLookupKeys[i]] === '+' ? true : escape;
+    escape = scriptsLookup[scriptsLookupKeys[i]] === '-' ? true : escape;
+
+    value = value.replace(new RegExp((escape === true ? '\\' : '') + scriptsLookup[scriptsLookupKeys[i]], 'gm'), scriptsLookupKeys[i]);
   }
 
   return value;

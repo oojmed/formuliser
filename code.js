@@ -736,7 +736,10 @@ function generateCompoundList(search, sort) {
 
   document.getElementById('compound-list').innerHTML = '';
 
-  let compounds = compoundLookup.filter((x) => x.name.toLowerCase().indexOf(search.toLowerCase()) !== -1);
+  let searchRegex = new RegExp(search.toLowerCase().split('').join('.*'));
+
+  let compounds = compoundLookup.filter((x) => x.name.toLowerCase().match(searchRegex) !== null);
+  // let compounds = compoundLookup.filter((x) => x.name.toLowerCase().indexOf(search.toLowerCase()) !== -1);
 
   if (sort === 'zyx') {
     compounds = compounds.sort(function(a, b) {

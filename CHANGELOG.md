@@ -8,10 +8,12 @@
 ## v10
 
 ### Features
-- **Added sorting options to compound search**:
+- **Added sorting options to compound search**: (v10 rc1)
     - Abc (Alphabetical)
     - Zyx (Reverse Alphabetical)
-
+- 'Fix' formula for ethanol (v10 rc2)
+- Fix some formatting in code (v10 rc2)
+- Autofocus on compound search when compound panel drawn (v10 rc2)
 
 ## v9
 

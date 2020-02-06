@@ -1,9 +1,50 @@
 # Formuliser Changelog
 
 #### Changelog Notes
-> Regex used to replace compounds in code to compounds in markdown: `'(.*)': '(.*)',` to find and then using `  - $2 ($1)` to replace
+> Regex used to replace compounds in code to compounds in markdown: `{ name: '(.*)', formula: '(.*)' },` to find and then using `  - $1 ($2)` to replace
 
 ---
+
+## v9
+
+### Features
+- Rewrote compounds system to allow several compounds with the same formula
+- Added 31 new compounds (59 > 90 total): (- there has been a miscalculation in the total of the last updates)
+  - Zeise\'s Salt (C2H6Cl3KOPt)
+  - Xenic Acid (H2XeO4)
+  - Pyrophosphoric Acid (H4P2O7)
+  - Phosphorous Acid (H3PO3)
+  - Metaphosphoric Acid (HPO3)
+  - Hypophosphoric Acid (H4P2O6)
+  - Yohimbine (Hydrochloride) (C21H26N2O3)
+  - Fluorosulfuric Acid (FSO3H)
+  - Formaldehyde (CH2O)
+  - Fluorene (C13H10)
+  - Ferrocene (C10H10Fe)
+  - Abietic Acid (C20H30O2)
+  - Fructose (C6H12O6)
+  - Formic Acid (HCOOH)
+  - Valine (C5H11NO2)
+  - Vanillin (C8H8O3)
+  - Veratraldehyde (C9H10O3)
+  - Lactic Acid (C3H6O3)
+  - Lysine (C6H14N2O2)
+  - Leucine (C6H13NO2)
+  - Galactose (C6H12O6)
+  - Glutamic Acid (C5H9NO4)
+  - Glycerol (C3H8O3)
+  - Glycine (C2H5NO2)
+  - Caffeine (C8H10N4O2)
+  - Cacodylic Acid (C2H7AsO2)
+  - Cadaverine (C5H14N2)
+  - Decaborane (B10H14)
+  - Epinephrine (C9H13NO3)
+  - Ethane (C2H6)
+  - Ethene (C2H4)
+- Remade changelog compound regex (see top)
+- Made compounds panel larger (width)
+- Added results to bottom of the compound search stating how many compounds appeared in the results
+
 
 ## v8
 
@@ -19,7 +60,6 @@
   - Bullvalene (C10H10)
   - Dickite (Al2Si2O5(OH)4)
   - Penguinone (C10H14O)
-
 - Added compound panel with:
     - Compound search
     - List of compounds

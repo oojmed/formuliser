@@ -127,69 +127,114 @@ let periodicLookup = {
 'Zr': { name: 'Zirconium', mass: 91.224 , atomic: 40, group: 4, period: 5, block: 'd', state: 'Solid', occurance: 'Primordial', desc: 'Transition metal' },
 };
 
-let compoundLookup = {
-'H2O': 'Water',
-'C6H12O6': 'Glucose',
-'C12H22O11': 'Sucrose',
-'HCl': 'Hydrochloric acid',
-'HNO3': 'Nitric acid',
-'H2SO4': 'Sulfuric acid',
-'C8H18': 'Octane',
-'NaHCO3': 'Baking Soda',
-'CH4': 'Methane',
-'NH3': 'Ammonia',
-'C6H6': 'Benzene',
-'C2H6O': 'Ethanol',
-'H2O2': 'Hydrogen Peroxide',
-'CH3COOH': 'Acetic Acid',
-'CH3OH': 'Methanol',
-'C60': 'Buckminsterfullerene',
-'C2H4': 'Ethylene',
-'C3H6O': 'Acetone',
-'C4H10': 'Butane',
-'C6H8O7': 'Citric Acid',
-'C4H8O': 'Tetrahydrofuran',
-'C6H14': 'Hexane',
-'C3H8': 'Propane',
-'C2H4O2': 'Vinegar',
-'C10H16O': 'Camphor',
-'NaCl': 'Salt',
-'SiO2': 'Silica',
-'OH': 'Hydroxide',
-'O3': 'Ozone',
-'Fe2O3': 'Rust',
-'CaO': 'Quicklime',
-'CaCO3': 'Limestone',
-'CO3': 'Carbonate',
-'HCO3': 'Bicarbonate',
-'PO4': 'Phosphate',
-'NH4': 'Ammonium',
-'CN': 'Cyanide',
-'NO3': 'Nitrate',
-'C7H8': 'Toluene',
-'SO4': 'Sulfate',
-'Al3F14Na5': 'Chiolite',
-'AlF6Na3': 'Cryolite',
-'Al2O5Si': 'Andalusite',
-'Al6O13Si2': 'Mullite',
-'AsH3': 'Arsine',
-'B3N3H6': 'Borazine',
-'BaFeSi4O10': 'Gillespite',
-'BaSO4': 'Barite',
-'CHCl3': 'Chloroform',
-'C23H22N2O3S2': 'Silica aerogel',
-'C12H22O11': 'Lactose',
-'C8H8': 'Barrelene',
-'C20H20': 'Dodecahedrane',
-'C5H8': 'Housane',
-'C6H6': 'Prismane',
-'C4H2O4': 'Quadratic Acid',
-'C10H10': 'Bullvalene',
-'Al2Si2O5(OH)4': 'Dickite',
-'C10H14O': 'Penguinone'
-};
-let compoundLookupKeys = Object.keys(compoundLookup);
-let compoundLookupValues = Object.values(compoundLookup);
+let compoundLookup = [
+{ name: 'Water', formula: 'H2O' },
+{ name: 'Glucose', formula: 'C6H12O6' },
+{ name: 'Sucrose', formula: 'C12H22O11' },
+{ name: 'Hydrochloric Acid', formula: 'HCl' },
+{ name: 'Nitric Acid', formula: 'HNO3' },
+{ name: 'Sulfuric Acid', formula: 'H2SO4' },
+{ name: 'Octane', formula: 'C8H18' },
+{ name: 'Baking Soda', formula: 'NaHCO3' },
+{ name: 'Methane', formula: 'CH4' },
+{ name: 'Ammonia', formula: 'NH3' },
+{ name: 'Benzene', formula: 'C6H6' },
+{ name: 'Ethanol', formula: 'C2H6O' },
+{ name: 'Hydrogen Peroxide', formula: 'H2O2' },
+{ name: 'Acetic Acid', formula: 'CH3COOH' },
+{ name: 'Methanol', formula: 'CH3OH' },
+{ name: 'Buckminsterfullerene', formula: 'C60' },
+{ name: 'Ethylene', formula: 'C2H4' },
+{ name: 'Acetone', formula: 'C3H6O' },
+{ name: 'Butane', formula: 'C4H10' },
+{ name: 'Citric Acid', formula: 'C6H8O7' },
+{ name: 'Tetrahydrofuran', formula: 'C4H8O' },
+{ name: 'Hexane', formula: 'C6H14' },
+{ name: 'Propane', formula: 'C3H8' },
+{ name: 'Vinegar', formula: 'C2H4O2' },
+{ name: 'Camphor', formula: 'C10H16O' },
+{ name: 'Table Salt', formula: 'NaCl' },
+{ name: 'Silica', formula: 'SiO2' },
+{ name: 'Hydroxide', formula: 'OH' },
+{ name: 'Ozone', formula: 'O3' },
+{ name: 'Rust', formula: 'Fe2O3' },
+{ name: 'Quicklime', formula: 'CaO' },
+{ name: 'Limestone', formula: 'CaCO3' },
+{ name: 'Carbonate', formula: 'CO3' },
+{ name: 'Bicarbonate', formula: 'HCO3' },
+{ name: 'Phosphate', formula: 'PO4' },
+{ name: 'Ammonium', formula: 'NH4' },
+{ name: 'Cyanide', formula: 'CN' },
+{ name: 'Nitrate', formula: 'NO3' },
+{ name: 'Toluene', formula: 'C7H8' },
+{ name: 'Sulfate', formula: 'SO4' },
+{ name: 'Chiolite', formula: 'Al3F14Na5' },
+{ name: 'Cryolite', formula: 'AlF6Na3' },
+{ name: 'Andalusite', formula: 'Al2O5Si' },
+{ name: 'Mullite', formula: 'Al6O13Si2' },
+{ name: 'Arsine', formula: 'AsH3' },
+{ name: 'Borazine', formula: 'B3N3H6' },
+{ name: 'Gillespite', formula: 'BaFeSi4O10' },
+{ name: 'Barite', formula: 'BaSO4' },
+{ name: 'Chloroform', formula: 'CHCl3' },
+{ name: 'Silica Aerogel', formula: 'C23H22N2O3S2' },
+{ name: 'Lactose', formula: 'C12H22O11' },
+{ name: 'Barrelene', formula: 'C8H8' },
+{ name: 'Dodecahedrane', formula: 'C20H20' },
+{ name: 'Housane', formula: 'C5H8' },
+{ name: 'Prismane', formula: 'C6H6' },
+{ name: 'Quadratic Acid', formula: 'C4H2O4' },
+{ name: 'Bullvalene', formula: 'C10H10' },
+{ name: 'Dickite', formula: 'Al2Si2O5(OH)4' },
+{ name: 'Penguinone', formula: 'C10H14O' },
+{ name: 'Zeise\'s Salt', formula: 'C2H6Cl3KOPt' },
+{ name: 'Xenic Acid', formula: 'H2XeO4' },
+{ name: 'Pyrophosphoric Acid', formula: 'H4P2O7' },
+{ name: 'Phosphorous Acid', formula: 'H3PO3' },
+{ name: 'Metaphosphoric Acid', formula: 'HPO3' },
+{ name: 'Hypophosphoric Acid', formula: 'H4P2O6' },
+{ name: 'Yohimbine (Hydrochloride)', formula: 'C21H26N2O3' },
+{ name: 'Fluorosulfuric Acid', formula: 'FSO3H' },
+{ name: 'Formaldehyde', formula: 'CH2O' },
+{ name: 'Fluorene', formula: 'C13H10' },
+{ name: 'Ferrocene', formula: 'C10H10Fe' },
+{ name: 'Abietic Acid', formula: 'C20H30O2' },
+{ name: 'Fructose', formula: 'C6H12O6' },
+{ name: 'Formic Acid', formula: 'HCOOH' },
+{ name: 'Valine', formula: 'C5H11NO2' },
+{ name: 'Vanillin', formula: 'C8H8O3' },
+{ name: 'Veratraldehyde', formula: 'C9H10O3' },
+{ name: 'Lactic Acid', formula: 'C3H6O3' },
+{ name: 'Lysine', formula: 'C6H14N2O2' },
+{ name: 'Leucine', formula: 'C6H13NO2' },
+{ name: 'Galactose', formula: 'C6H12O6' },
+{ name: 'Glutamic Acid', formula: 'C5H9NO4' },
+{ name: 'Glycerol', formula: 'C3H8O3' },
+{ name: 'Glycine', formula: 'C2H5NO2' },
+{ name: 'Caffeine', formula: 'C8H10N4O2' },
+{ name: 'Cacodylic Acid', formula: 'C2H7AsO2' },
+{ name: 'Cadaverine', formula: 'C5H14N2' },
+{ name: 'Decaborane', formula: 'B10H14' },
+{ name: 'Epinephrine', formula: 'C9H13NO3' },
+{ name: 'Ethane', formula: 'C2H6' },
+{ name: 'Ethene', formula: 'C2H4' }
+];
+
+// Sort by alphabetical order of name
+compoundLookup = compoundLookup.sort(function(a, b) {
+  var nameA = a.name.toLowerCase();
+  var nameB = b.name.toLowerCase();
+
+  if (nameA < nameB) {
+    return -1;
+  }
+
+  if (nameA > nameB) {
+    return 1;
+  }
+
+  return 0;
+});
 
 // window.periodicLookupKeys = Object.keys(window.lookup);
 
@@ -308,6 +353,14 @@ function simplifyFormula(formula) {
   return [clone.slice(0), clone.join('')];
 }
 
+function getCompoundByName(name) {
+  return compoundLookup.find(c => c.name.toLowerCase() === name.toLowerCase());
+}
+
+function getCompoundByFormula(formula) {
+  return compoundLookup.filter(c => c.formula === formula);
+}
+
 function processFormula(formula, subprocess) {
   formula = unsubscriptise(formula);
 
@@ -323,14 +376,12 @@ function processFormula(formula, subprocess) {
     return [reverseSymbol, reverseElement.mass];
   }
 
-  let reverseCompoundName = compoundLookupValues.find(name => name.toLowerCase() === formula.toLowerCase());
+  let reverseCompound = getCompoundByName(formula);
 
-  if (reverseCompoundName !== undefined) {
-    let reverseCompoundFormula = compoundLookupKeys[compoundLookupValues.indexOf(reverseCompoundName)];
+  if (reverseCompound !== undefined) {
+    let processed = processFormula(reverseCompound.formula);
 
-    let processed = processFormula(reverseCompoundFormula);
-
-    return [`${subscriptise(reverseCompoundFormula)} - ${processed[0].split(' - ')[1]}`, processed[1]];
+    return [`${subscriptise(reverseCompound.formula)} - ${processed[0].split(' - ')[1]}`, processed[1]];
   }
 
   formula = formula.replace(/ /g, '');
@@ -403,15 +454,20 @@ function processFormula(formula, subprocess) {
   let namesFinal = namesCombined.join(', ');
 
   if (subprocess !== false) {
-    for (let i = 0; i < compoundLookupKeys.length; i++) {
-      let c = compoundLookupKeys[i];
+    let compounds = getCompoundByFormula(formula).map((e) => e.name);
 
-      let p = processFormula(c, false);
-
-      if (namesFinal === p[0]) { // if (namesFinal.indexOf(p[0]) !== -1) {
-        namesFinal = `${compoundLookup[c]} - ${namesFinal}`;
-      }
+    if (compounds.length > 0) {
+      namesFinal = `${compounds.join(' / ')} - ${namesFinal}`;
     }
+
+    /*for (let i = 0; i < compoundLookup.length; i++) {
+      let p = processFormula(compoundLookup[i].formula, false);
+
+      if (namesFinal === p[0]) {
+        namesFinal = `${compoundLookup[i].formula} - ${namesFinal}`;
+        break;
+      }
+    }*/
 
     if (namesFinal === namesCombined.join(', ') && namesFinal.replace(/[^,]/g, "").length === 1) {
       let newNames = namesCombined.slice(0);
@@ -675,21 +731,7 @@ function generateCompoundList(search) {
 
   document.getElementById('compound-list').innerHTML = '';
 
-  let compounds = [];
-
-  let compoundValuesSorted = Object.values(compoundLookup).sort();
-
-  console.log(compoundValuesSorted);
-
-  for (let i = 0; i < compoundValuesSorted.length; i++) {
-    if (compoundValuesSorted[i].toLowerCase().indexOf(search.toLowerCase()) !== -1) {
-      compounds.push({name: compoundValuesSorted[i],
-        formula: compoundLookupKeys[compoundLookupValues.indexOf(compoundValuesSorted[i])]
-      });
-    }
-  }
-
-  console.log(compounds);
+  let compounds = compoundLookup.filter((x) => x.name.toLowerCase().indexOf(search.toLowerCase()) !== -1);
 
   for (let i = 0; i < compounds.length; i++) {
     let el = document.createElement('button');
@@ -702,6 +744,16 @@ function generateCompoundList(search) {
 
     document.getElementById('compound-list').appendChild(el);
   }
+
+  let el = document.createElement('button');
+  el.id = 'compound-list-results';
+  el.disabled = true;
+
+  let ending = compounds.length > 1 ? 's' : '';
+
+  el.innerText = `${compounds.length} compound${ending}`;
+
+  document.getElementById('compound-list').appendChild(el);
 }
 
 document.getElementById('compound-search').oninput = function() {

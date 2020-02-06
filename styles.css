@@ -243,8 +243,6 @@ a:visited {
     border-radius: 2px;
     border: 3px solid rgba(80, 82, 84, 0.75);
 
-    text-align: center;
-
     pointer-events: all;
 
     box-shadow: 0px 0px 5px rgba(0, 0, 0, .5);
@@ -296,7 +294,7 @@ a:visited {
 }
 
 #compound-search {
-    width: calc(100% - 10px);
+    width: calc(100% - 50px - 10px);
 
     color: rgba(255, 255, 255, .99);
     background-color: rgba(100, 102, 104, .2);
@@ -309,6 +307,30 @@ a:visited {
     padding: 5px;
 
     text-align: center;
+
+    display: inline-block;
+}
+
+#compound-sort {
+    width: 50px;
+
+    padding: 2.5px;
+
+    font-size: 13px;
+
+    height: calc(7% + 2px);
+
+    border: none;
+
+    float: right;
+
+    background-color: rgba(100, 102, 104, .4);
+    color: rgba(255, 255, 255, .99);
+}
+
+option {
+    background-color: rgb(60, 60, 60);
+    color: rgb(255, 255, 255);
 }
 
 #compound-list {

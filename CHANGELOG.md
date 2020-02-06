@@ -5,6 +5,14 @@
 
 ---
 
+## v10
+
+### Features
+- **Added sorting options to compound search**:
+    - Abc (Alphabetical)
+    - Zyx (Reverse Alphabetical)
+
+
 ## v9
 
 ### Features

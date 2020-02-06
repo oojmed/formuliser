@@ -726,12 +726,30 @@ function showPanel(id) {
   parent.className = parent.className === '' ? 'show' : '';
 }
 
-function generateCompoundList(search) {
+function generateCompoundList(search, sort) {
   search = search === undefined ? '' : search;
+  sort = sort === undefined ? 'abc' : sort;
 
   document.getElementById('compound-list').innerHTML = '';
 
   let compounds = compoundLookup.filter((x) => x.name.toLowerCase().indexOf(search.toLowerCase()) !== -1);
+
+  if (sort === 'zyx') {
+    compounds = compounds.sort(function(a, b) {
+      var nameA = a.name.toLowerCase();
+      var nameB = b.name.toLowerCase();
+
+      if (nameA > nameB) {
+        return -1;
+      }
+
+      if (nameA < nameB) {
+        return 1;
+      }
+
+      return 0;
+    });
+  }
 
   for (let i = 0; i < compounds.length; i++) {
     let el = document.createElement('button');
@@ -756,8 +774,16 @@ function generateCompoundList(search) {
   document.getElementById('compound-list').appendChild(el);
 }
 
+function compoundSearch() {
+  generateCompoundList(document.getElementById('compound-search').value, document.getElementById('compound-sort').value);
+}
+
 document.getElementById('compound-search').oninput = function() {
-  generateCompoundList(document.getElementById('compound-search').value);
+  compoundSearch();
+};
+
+document.getElementById('compound-sort').oninput = function() {
+  compoundSearch();
 };
 
 generateCompoundList();

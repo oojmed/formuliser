@@ -1,7 +1,7 @@
 # Formuliser Changelog
 
 #### Changelog Notes
-> Regex used to replace compounds in code to compounds in markdown: `{ name: '(.*)', formula: '(.*)' },` to find and then using `  - $1 ($2)` to replace
+> Regex used to replace compounds in code to compounds in markdown: `\{ name: '(.*)', formula: '(.*)' \},` to find and then using `  - $1 ($2)` to replace
 
 ---
 
@@ -15,6 +15,22 @@
 - Fix some formatting in code (v10 rc2)
 - Autofocus on compound search when compound panel drawn (v10 rc2)
 - ~~Use new search method for searching compounds~~ Implement new search system in backend (but still using the old method for now) (v10 rc3, rc4)
+- Added 15 new compounds (90 > 105 total) (Over 100, yay!) (v10 rc5)
+  - Urea (CH4N2O)
+  - Uric Acid (C5H4N4O3)
+  - Ibuprofen (C13H18O2)
+  - Iodic Acid (HIO3)
+  - Isopropyl Alcohol (C3H8O)
+  - Isopropanol (C3H8O)
+  - Isoprene (C5H8)
+  - Isoleucine (C6H13NO2)
+  - Isoborneol (C10H18O)
+  - Benzil ((C6H5CO)2)
+  - Benzoic Acid (C7H6O2)
+  - Benzoin (C14H12O2)
+  - Benzyl Alcohol (C6H5CH2OH)
+  - Orthophosphoric Acid (H3PO4)
+  - Maltose (C12H22O11)
 
 
 ## v9

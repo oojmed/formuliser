@@ -217,7 +217,22 @@ let compoundLookup = [
 { name: 'Decaborane', formula: 'B10H14' },
 { name: 'Epinephrine', formula: 'C9H13NO3' },
 { name: 'Ethane', formula: 'C2H6' },
-{ name: 'Ethene', formula: 'C2H4' }
+{ name: 'Ethene', formula: 'C2H4' },
+{ name: 'Urea', formula: 'CH4N2O' },
+{ name: 'Uric Acid', formula: 'C5H4N4O3' },
+{ name: 'Ibuprofen', formula: 'C13H18O2' },
+{ name: 'Iodic Acid', formula: 'HIO3' },
+{ name: 'Isopropyl Alcohol', formula: 'C3H8O' },
+{ name: 'Isopropanol', formula: 'C3H8O' },
+{ name: 'Isoprene', formula: 'C5H8' },
+{ name: 'Isoleucine', formula: 'C6H13NO2' },
+{ name: 'Isoborneol', formula: 'C10H18O' },
+{ name: 'Benzil', formula: '(C6H5CO)2' },
+{ name: 'Benzoic Acid', formula: 'C7H6O2' },
+{ name: 'Benzoin', formula: 'C14H12O2' },
+{ name: 'Benzyl Alcohol', formula: 'C6H5CH2OH' },
+{ name: 'Orthophosphoric Acid', formula: 'H3PO4' },
+{ name: 'Maltose', formula: 'C12H22O11' }
 ];
 
 // Sort by alphabetical order of name

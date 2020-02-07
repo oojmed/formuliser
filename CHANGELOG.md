@@ -15,7 +15,7 @@
 - Fix some formatting in code (v10 rc2)
 - Autofocus on compound search when compound panel drawn (v10 rc2)
 - ~~Use new search method for searching compounds~~ Implement new search system in backend (but still using the old method for now) (v10 rc3, rc4)
-- Added 15 new compounds (90 > 105 total) (Over 100, yay!) (v10 rc5)
+- Added 15 new compounds (90 > 105 total) - Over 100, yay! (v10 rc5)
   - Urea (CH4N2O)
   - Uric Acid (C5H4N4O3)
   - Ibuprofen (C13H18O2)

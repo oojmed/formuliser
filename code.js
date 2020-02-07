@@ -730,16 +730,36 @@ function showPanel(id) {
   parent.className = parent.className === '' ? 'show' : '';
 }
 
+function generateThroughSearchRegex(s) {
+  return new RegExp(s.toLowerCase().split('').join('.*'))
+}
+
+function searchText(toSearch, toFind, method, caseSensitive) {
+  method = method === undefined ? 'index' : method;
+
+  toSearch = caseSensitive === true ? toSearch : toSearch.toLowerCase();
+  toFind = caseSensitive === true ? toFind : toFind.toLowerCase();
+
+  if (method === 'index') {
+    return toSearch.indexOf(toFind) !== -1;
+  }
+
+  if (method === 'through') {
+    let searchRegex = typeof toFind === 'string' ? generateThroughSearchRegex(toFind) : toFind;
+
+    return toSearch.match(searchRegex) !== null;
+  }
+}
+
 function generateCompoundList(search, sort) {
   search = search === undefined ? '' : search;
   sort = sort === undefined ? 'abc' : sort;
 
   document.getElementById('compound-list').innerHTML = '';
 
-  let searchRegex = new RegExp(search.toLowerCase().split('').join('.*'));
+  let searchRegex = generateThroughSearchRegex(search);
 
-  let compounds = compoundLookup.filter((x) => x.name.toLowerCase().match(searchRegex) !== null);
-  // let compounds = compoundLookup.filter((x) => x.name.toLowerCase().indexOf(search.toLowerCase()) !== -1);
+  let compounds = compoundLookup.filter((x) => searchText(x.name, search, 'index', false));
 
   if (sort === 'zyx') {
     compounds = compounds.sort(function(a, b) {

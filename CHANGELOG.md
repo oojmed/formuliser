@@ -14,7 +14,7 @@
 - 'Fix' formula for ethanol (v10 rc2)
 - Fix some formatting in code (v10 rc2)
 - Autofocus on compound search when compound panel drawn (v10 rc2)
-- Use new search method for searching compounds (v10 rc3)
+- ~~Use new search method for searching compounds~~ Implement new search system in backend (but still using the old method for now) (v10 rc3, rc4)
 
 
 ## v9

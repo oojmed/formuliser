@@ -5,6 +5,12 @@
 
 ---
 
+## v11
+
+### Features
+- Added swipe support for showing and hiding panels (v11 rc1)
+
+
 ## v10
 
 ### Features

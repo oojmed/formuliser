@@ -411,7 +411,6 @@ function processFormula(formula, subprocess) {
 
   let elements = [];
   let names = [];
-  let masses = {};
   let totalMass = 0;
   let fail = false;
 
@@ -435,8 +434,6 @@ function processFormula(formula, subprocess) {
         names.push(el.name);
         totalMass += el.mass;
 
-        masses[s] = (masses[s] || 0) + el.mass;
-
         elements.push(el);
     }
   }
@@ -445,16 +442,6 @@ function processFormula(formula, subprocess) {
 
   if (elements.length >= 10000) {
     return [false, [elements.length, ' is over the element processing limit']];
-  }
-
-  let percents = [];
-
-  let massesKeys = Object.keys(masses);
-
-  for (let i = 0; i < massesKeys.length; i++) {
-    let k = massesKeys[i];
-
-    percents.push({symbol: k, name: periodicLookup[k].name, percent: masses[k] / totalMass * 100, mass: masses[k]});;
   }
 
   let lastName = "";
@@ -529,7 +516,7 @@ function processFormula(formula, subprocess) {
 
   namesFinal = namesFinal === [''] ? '' : namesFinal;
 
-  return [namesFinal, totalMass === 0 ? '' : parseFloat(totalMass.toPrecision(5)), percents];
+  return [namesFinal, totalMass === 0 ? '' : parseFloat(totalMass.toPrecision(5))];
 }
 
 f.onkeypress = function(e) {
@@ -637,29 +624,7 @@ function interpretInput() {
   let popup = document.createElement('div');
   popup.id = 'mass-popup';
 
-  console.log(result[2]);
-
-  for (let i = 0; i < result[2].length; i++) {
-    let o = result[2][i];
-
-    let e = document.createElement('div');
-    e.className = 'mass-popup-row';
-
-    let eEl = document.createElement('div');
-    eEl.className = 'mass-popup-row-element';
-    eEl.innerText = `${o.name} (${o.symbol})`;
-
-    let eRight = document.createElement('div');
-    eRight.className = 'mass-popup-row-right';
-    eRight.innerText = Math.round(o.percent) + '%';
-
-    e.appendChild(eEl);
-    e.appendChild(eRight);
-
-    popup.appendChild(e);
-  }
-
-  document.getElementById('mass').prepend(popup);
+  
 }
 
 f.oninput = function() {

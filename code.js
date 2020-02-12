@@ -620,6 +620,11 @@ function interpretInput() {
 
   document.getElementById("elements-body").innerText = body;
   document.getElementById("mass").innerText = result[1];
+
+  let popup = document.createElement('div');
+  popup.id = 'mass-popup';
+
+  // TODO
 }
 
 f.oninput = function() {

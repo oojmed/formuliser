@@ -457,6 +457,8 @@ function processFormula(formula, subprocess) {
     percents.push({symbol: k, name: periodicLookup[k].name, percent: masses[k] / totalMass * 100, mass: masses[k]});;
   }
 
+  percents = percents.sort((a, b) => b.percent - a.percent);
+
   let lastName = "";
   let lastCount = 1;
 

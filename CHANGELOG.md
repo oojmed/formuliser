@@ -5,9 +5,21 @@
 
 ---
 
+## v13
+
+### Features
+- Added 1 new compound (105 > 106 total) (v13 dev1)
+  - Carbonic Acid (H2CO3)
+- Added pane to the (top) left on hover of compounds and elements which shows information
+- Added 2d structure diagram (from PubChem) when a compound (only in the dictionary) is being shown
+
+### Fixes
+- Fixed all the new (not name, symbol or mass) data being offset / wrong
+
+
 ## v12
 
-(WIP)
+(Changelog lost)
 
 
 ## v11

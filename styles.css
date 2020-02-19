@@ -45,17 +45,62 @@ a:visited {
     font-size: 48px;
 }
 
-/*#mass-popup {
+#popup {
+    display: none;
+
+    position: absolute;
+    top: 25%;
+    left: 10px;
+
+    z-index: 99;
+
+    transform: translateY(-50%);
+
+    width: 300px;
+
+    text-align: center;
+
+    font-size: 24px;
+
+    padding: 5px;
+
+    overflow: auto;
+
+    border-radius: 2px;
+    border: 3px solid rgba(80, 82, 84, 0.75);
+
+    background-color: rgba(61, 65, 68, 0.5);
+
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, .5);
+}
+
+#popup.show {
+    display: block;
+}
+
+#popup-title {
+    font-weight: bold;
+}
+
+#mass-popup {
+    display: none;
+}
+
+#mass-popup.show {
+    display: block;
+}
+
+img[src=""] {
     display: none;
 }
 
 #mass:hover #mass-popup,
 #mass:active #mass-popup {
     display: block;
-}*/
+}
 
 #mass-popup {
-    max-height: 12.5vh;
+    max-height: 15vh;
 
     overflow-y: auto;
 
@@ -79,7 +124,7 @@ a:visited {
     z-index: 10;
 }
 
-.mass-popup-row {
+.row {
     display: block;
 
     clear: both;
@@ -88,24 +133,58 @@ a:visited {
     height: 30px;
 }
 
-.mass-popup-row > .mass-popup-row-element {
+.row-left {
     float: left;
 }
 
-.mass-popup-row > .mass-popup-row-right {
+.row-right {
     float: right;
 
     font-weight: bold;
 }
 
+details > span {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+#model-image {
+    position: absolute;
+    top: 27.5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.9;
+    z-index: 0;
+    filter: invert(93%);
+    pointer-events: none;
+}
+
+#model-label {
+    position: absolute;
+    top: 8%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.7;
+    z-index: 0;
+}
+
 #elements {
-    top: calc(40% + 120px); /* 60%; */
+    top: 57.5%; /*calc(40% + 120px); /* 60%; */
     left: 12.5%;
 
     width: 75%;
-    height: 15%;
+    height: 80px;
 
-    font-size: 28px;
+    font-size: 24px;
+
+    white-space: nowrap;
+
+    overflow-x: auto;
+    overflow-y: visible;
+}
+
+#elements-body > span {
+    pointer: hover;
 }
 
 #formula {

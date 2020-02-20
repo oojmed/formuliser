@@ -5,7 +5,13 @@
 
 ---
 
-## v14
+## v14 Alpha2
+
+### Fixes
+- Fixed install prompts not working
+
+
+## v14 Alpha1
 
 ### Fixes
 - Fixed popups / left panel not working with elements with more than one number (H12 displaying as H2 and not H12)

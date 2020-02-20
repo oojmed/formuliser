@@ -1,3 +1,5 @@
+import * as Settings from '/js/info/settings';
+
 let deferredPrompt;
 
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -11,7 +13,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
 });
 
 function checkToShowInstallPrompt() {
-  if (settingInstallPrompts !== true) {
+  if (Settings.installPrompts !== true) {
     return;
   }
 

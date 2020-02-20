@@ -5,6 +5,13 @@
 
 ---
 
+## v14
+
+### Fixes
+- Fixed popups / left panel not working with elements with more than one number (H12 displaying as H2 and not H12)
+- Rewrote and organised JS, fixing many minor bugs
+
+
 ## v13
 
 ### Features
@@ -12,6 +19,9 @@
   - Carbonic Acid (H2CO3)
 - Added pane to the (top) left on hover of compounds and elements which shows information
 - Added 2d structure diagram (from PubChem) when a compound (only in the dictionary) is being shown
+
+### Changes
+- Mass percentages / popup now only showes on hover
 
 ### Fixes
 - Fixed all the new (not name, symbol or mass) data being offset / wrong

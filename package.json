@@ -1,0 +1,36 @@
+{
+  "name": "formuliser",
+  "version": "14.0.0",
+  "description": "Get info on chemical formulae.",
+  "main": "code.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "parcel src/index.html",
+    "build": "parcel build src/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oojmed/formuliser.git"
+  },
+  "keywords": [
+    "chemistry",
+    "webapp"
+  ],
+  "author": "Oojmed",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/oojmed/formuliser/issues"
+  },
+  "homepage": "https://github.com/oojmed/formuliser#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4"
+  },
+  "dependencies": {
+    "info": "0.0.6-beta.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "browserslist": [
+    "last 1 Chrome versions"
+  ]
+}

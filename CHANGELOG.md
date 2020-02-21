@@ -5,6 +5,12 @@
 
 ---
 
+## v14 Alpha 3
+
+### Fixes
+- Fixed service worker (now using Workbox)
+
+
 ## v14 Alpha2
 
 ### Fixes

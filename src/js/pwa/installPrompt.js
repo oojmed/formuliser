@@ -1,4 +1,5 @@
 import * as Settings from '/js/info/settings';
+import { showSnackbar } from '/js/ui/snackbar';
 
 let deferredPrompt;
 

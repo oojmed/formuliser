@@ -1,6 +1,6 @@
 let snackbars = ["update", "install"];
 
-function showSnackbar(name) {
+export function showSnackbar(name) {
   let c = document.getElementById("snackbar").className;
 
   document.getElementById("snackbar").className = "";

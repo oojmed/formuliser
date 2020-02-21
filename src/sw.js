@@ -1,70 +1,31 @@
-const baseCacheName = 'Formuliser';
-const versionName = 'v14_alpha2';
-const cacheName = baseCacheName + '-' + versionName;
-const runtimeCacheName = cacheName + '-runtime';
+import {registerRoute} from 'workbox-routing';
+import {CacheFirst, StaleWhileRevalidate} from 'workbox-strategies';
+import {ExpirationPlugin} from 'workbox-expiration';
 
-const staticAssets = [
-  '/',
-  '/index.html',
-  // '/?homescreen=1',
-  // '/index.html?homescreen=1',
+registerRoute(
+  // Cache CSS files.
+  /\.(?:html|css|js)$/,
+  // Use cache but update in the background.
+  new StaleWhileRevalidate({
+    // Use a custom cache name.
+    cacheName: 'css-cache',
+  })
+);
 
-  '/styles.css',
-  '/code.js',
-  '/manifest.json',
-
-  '/favicon.ico',
-  '/icons/logo_192.png',
-  '/icons/logo_512.png',
-
-  'https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en'
-];
-
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(cacheName)
-      .then(cache => cache.addAll(staticAssets))
-      .then(self.skipWaiting())
-  );
-});
-
-self.addEventListener('activate', event => {
-  const currentCaches = [cacheName, runtimeCacheName];
-  event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return cacheNames.filter(cacheName => !currentCaches.includes(cacheName));
-    }).then(cachesToDelete => {
-      return Promise.all(cachesToDelete.map(cacheToDelete => {
-        return caches.delete(cacheToDelete);
-      }));
-    }).then(() => self.clients.claim())
-  );
-});
-
-self.addEventListener('fetch', event => {
-  const req = event.request;
-  const url = new URL(req.url);
-
-  if (url.origin === location.origin) {
-    event.respondWith(cacheFirst(req));
-  } else {
-    //e.respondWith(networkAndCache(req));
-  }
-});
-
-function cacheFirst(request) {
-  return caches.match(request).then(cachedResponse => {
-    if (cachedResponse) {
-      return cachedResponse;
-    }
-
-    return caches.open(runtimeCacheName).then(cache => {
-      return fetch(request).then(response => {
-        // Put a copy of the response in the runtime cache.
-        return cache.put(request, response.clone()).then(() => {
-          return response;
-        });
-      });
-    });
-  });
-}
+registerRoute(
+  // Cache image files.
+  /\.(?:png|jpg|jpeg|svg|gif)$/,
+  // Use the cache if it's available.
+  new CacheFirst({
+    // Use a custom cache name.
+    cacheName: 'image-cache',
+    plugins: [
+      new ExpirationPlugin({
+        // Cache only 20 images.
+        maxEntries: 20,
+        // Cache for a maximum of a week.
+        maxAgeSeconds: 7 * 24 * 60 * 60,
+      })
+    ],
+  })
+);

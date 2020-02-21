@@ -5,6 +5,12 @@
 
 ---
 
+## v14 Alpha 4
+
+### Fixes
+- [Backend / Dev] Fixed build script
+
+
 ## v14 Alpha 3
 
 ### Fixes

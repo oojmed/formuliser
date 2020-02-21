@@ -1,12 +1,12 @@
 {
   "name": "formuliser",
-  "version": "14.0.0",
+  "version": "14.0.0-alpha4",
   "description": "Get info on chemical formulae.",
   "main": "code.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "parcel --no-autoinstall src/index.html",
-    "build": "parcel --no-autoinstall build src/index.html"
+    "dev": "parcel src/index.html",
+    "build": "parcel build --no-autoinstall src/index.html"
   },
   "repository": {
     "type": "git",

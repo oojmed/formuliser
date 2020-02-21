@@ -5,6 +5,13 @@
 
 ---
 
+## v14 Alpha 5
+
+### Fixes
+- Now precache with new service worker
+- Fixed drag panels not working
+
+
 ## v14 Alpha 4
 
 ### Fixes

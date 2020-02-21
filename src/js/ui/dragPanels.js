@@ -1,3 +1,5 @@
+import { showPanel, hidePanel } from '/js/ui/panels';
+
 let leftDrag = false;
 let rightDrag = false;
 let topDrag = false;

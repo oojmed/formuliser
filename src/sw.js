@@ -1,6 +1,9 @@
-import {registerRoute} from 'workbox-routing';
-import {CacheFirst, StaleWhileRevalidate} from 'workbox-strategies';
-import {ExpirationPlugin} from 'workbox-expiration';
+import { registerRoute } from 'workbox-routing';
+import { CacheFirst, StaleWhileRevalidate } from 'workbox-strategies';
+import { ExpirationPlugin } from 'workbox-expiration';
+import { precacheAndRoute } from 'workbox-precaching';
+
+precacheAndRoute(self.__WB_MANIFEST);
 
 registerRoute(
   // Cache CSS files.

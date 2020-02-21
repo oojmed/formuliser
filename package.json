@@ -4,9 +4,8 @@
   "description": "Get info on chemical formulae.",
   "main": "code.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "parcel src/index.html",
-    "build": "parcel build --no-autoinstall src/index.html"
+    "build": "sh build.sh"
   },
   "repository": {
     "type": "git",
@@ -22,9 +21,11 @@
     "url": "https://github.com/oojmed/formuliser/issues"
   },
   "homepage": "https://github.com/oojmed/formuliser#readme",
-  "devDependencies": {
+  "dependencies": {
     "parcel-bundler": "^1.12.4",
+    "workbox-build": "^5.0.0",
     "workbox-expiration": "^5.0.0",
+    "workbox-precaching": "^5.0.0",
     "workbox-routing": "^5.0.0",
     "workbox-strategies": "^5.0.0"
   },

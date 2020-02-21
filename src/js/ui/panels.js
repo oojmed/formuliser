@@ -1,4 +1,4 @@
-function togglePanel(id) {
+export function togglePanel(id) {
   let parent = document.getElementById(id);
 
   if (parent.className === '') {
@@ -8,13 +8,13 @@ function togglePanel(id) {
   }
 }
 
-function showPanel(id) {
+export function showPanel(id) {
   let parent = document.getElementById(id);
 
   parent.className = 'show';
 }
 
-function hidePanel(id) {
+export function hidePanel(id) {
   let parent = document.getElementById(id);
 
   parent.className = '';

@@ -5,6 +5,12 @@
 
 ---
 
+## v14 Beta 1
+
+### Fixes
+- Added .ico to precache rule
+- [Dev] Update .gitignore to include Netlify directory
+
 ## v14 Alpha 5
 
 ### Fixes

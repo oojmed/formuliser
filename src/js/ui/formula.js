@@ -191,3 +191,26 @@ export function interpretInput() {
 
   document.getElementById('mass').prepend(popup);
 }
+
+export function getCharPos(n) {
+  let text = document.getElementById('formula').value;
+
+  let newF = document.createElement('div');
+  newF.id = 'formula';
+  newF.style.opacity = 0;
+
+  for (let c of text) {
+    let cEl = document.createElement('span');
+    cEl.innerText = c;
+
+    newF.appendChild(cEl);
+  }
+
+  document.body.appendChild(newF);
+
+  let rect = newF.children[n].getBoundingClientRect();
+
+  document.body.removeChild(newF);
+
+  return rect;
+}

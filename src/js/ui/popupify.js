@@ -1,9 +1,13 @@
 import { titleCase, evalExp, simplifyFormula, processFormula } from '/js/utils/process';
 import { subscriptise, unsubscriptise } from '/js/utils/subscriptise';
 
+import { getCharPos } from '/js/ui/formula';
+
 import { compoundLookup, getCompoundByName, getCompoundsByFormula } from '/js/info/compounds';
 import { periodicLookup, getElementByName, getSymbolFromElement, getElementSymbolByName } from '/js/info/elements';
 import * as Pubchem from '/js/api/pubchem';
+
+let oldModelSrc, oldModelLabel;
 
 export function popupify(el) {
   el.onmouseleave = function() {
@@ -18,14 +22,18 @@ export function popupify(el) {
     let revCompound = getCompoundByName(value);
 
     if (body !== undefined && body !== '' && el.parentNode.innerText.indexOf('/') === -1) {
-      document.getElementById('model-image').src = window.oldModelSrc;
-      document.getElementById('model-label').innerText = window.oldModelLabel;
+      document.getElementById('model-image').src = oldModelSrc;
+      document.getElementById('model-label').innerText = oldModelLabel;
     }
+
+    highlight.style.display = 'none';
   };
 
   el.onmouseenter = function() {
-    window.oldModelSrc = document.getElementById('model-image').src;
-    window.oldModelLabel = document.getElementById('model-label').innerText;
+    oldModelSrc = document.getElementById('model-image').src;
+    oldModelSrc = oldModelSrc === location.href ? '' : oldModelSrc;
+
+    oldModelLabel = document.getElementById('model-label').innerText;
 
     document.getElementById('popup').className = 'show';
     document.getElementById('popup').innerHTML = '';
@@ -43,23 +51,26 @@ export function popupify(el) {
 
     document.getElementById('popup').appendChild(title);
 
+    let formula = undefined;
+
     let element = getElementByName(name);
     element = element === undefined ? periodicLookup[name] : element;
 
     let rows = [];
 
     if (element !== undefined) {
-      rows = [['Symbol', getSymbolFromElement(element) + (num !== 1 ? subscriptise(num.toString()) : '')], ['Mass', element.mass * num], ['Atomic', element.atomic], ['Group', element.group], ['Period', element.period], ['Phase (STP)', element.state], ['Desc', element.desc]];
+      formula = getSymbolFromElement(element) + (num !== 1 ? subscriptise(num.toString()) : '');
+      rows = [['Symbol', formula], ['Mass', element.mass * num], ['Atomic', element.atomic], ['Group', element.group], ['Period', element.period], ['Phase (STP)', element.state], ['Desc', element.desc]];
     }
 
     let compound = getCompoundByName(name);
 
     if (compound !== undefined) {
-      rows = [['Formula', (num !== 1 ? num.toString : '') + subscriptise(compound.formula)], ['Mass', processFormula(compound.formula)[1] * num]];
+      formula = (num !== 1 ? num.toString : '') + subscriptise(compound.formula);
+      rows = [['Formula', formula], ['Mass', processFormula(compound.formula)[1] * num]];
 
       Pubchem.setImageFromName(name);
     }
-
 
     for (let x = 0; x < rows.length; x++) {
       let row = document.createElement('div');
@@ -78,6 +89,20 @@ export function popupify(el) {
 
       document.getElementById('popup').appendChild(row);
     }
+
+    let v = document.getElementById('formula').value;
+
+    let indexStart = v.indexOf(formula);
+    let indexEnd = indexStart + formula.length - 1;
+
+    let posStart = getCharPos(indexStart);
+    let posEnd = getCharPos(indexEnd);
+
+    let highlight = document.getElementById('highlight');
+    highlight.style.width = `${posEnd.x - posStart.x + posStart.width}px`;
+    highlight.style.left = `${posStart.x}px`;
+    highlight.style.top = `${posStart.y + 15}px`;
+    highlight.style.display = 'block';
   };
 }
 

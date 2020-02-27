@@ -1,6 +1,8 @@
 import { compoundLookup, getCompoundByName, getCompoundsByFormula } from '/js/info/compounds';
 import { interpretInput } from '/js/ui/formula';
 
+import * as QuizGen from '/js/quiz/gen';
+
 function generateThroughSearchRegex(s) {
   return new RegExp(s.toLowerCase().split('').join('.*'))
 }
@@ -52,6 +54,12 @@ function generateCompoundList(search, sort) {
   for (let i = 0; i < compounds.length; i++) {
     let el = document.createElement('button');
     el.innerText = compounds[i].name;
+
+    el.oncontextmenu = function() {
+      QuizGen.performCompoundQuiz(compounds[i]);
+
+      return false;
+    };
 
     el.onclick = function() {
       document.getElementById('formula').value = compounds[i].formula;

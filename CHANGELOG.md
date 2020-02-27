@@ -5,6 +5,13 @@
 
 ---
 
+## v15 - Beta 1
+
+### Features
+- Highlight relevant part of formula when hovering over element or compound
+- Added quiz for compounds in the compound panel (right click an option)
+
+
 ## v14 - Release Candidate 1
 
 ### Fixes

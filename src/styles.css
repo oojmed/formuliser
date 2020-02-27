@@ -1,5 +1,5 @@
 html, body {
-    background-color: #181a1b !important;
+    background-color: #181a1b;
     color: rgba(255, 255, 255, .87);
     font-family: Roboto, sans-serif;
 
@@ -8,6 +8,8 @@ html, body {
     width: 100%;
     height: 100%;
     margin: 0;
+
+    transition: background-color .5s;
 }
 
 * {
@@ -493,6 +495,72 @@ option {
 
     background-color: rgb(60, 64, 66);
 }
+
+
+#highlight {
+    position: absolute;
+    height: calc(15% - 25px);
+    opacity: 0.5;
+    background-color: yellow;
+
+    display: none;
+}
+
+
+#quiz {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: none;
+}
+
+#quiz-title {
+    position: absolute;
+    top: 20%;
+
+    transform: translateY(-50%);
+
+    width: 100%;
+
+    text-align: center;
+    font-size: 42px;
+}
+
+#quiz-options {
+    margin-top: 55vh;
+
+    transform: translateY(-50%);
+}
+
+.quiz-option {
+    font-size: 38px;
+
+    margin: auto;
+
+    width: 50%;
+    min-width: 250px;
+    height: 60px;
+
+    margin-bottom: 50px;
+}
+
+body[quiz=true] * {
+    display: none;
+}
+
+body[quiz=true] > #quiz {
+    display: block !important;
+}
+
+body[quiz=true] > #quiz * {
+    display: block !important;
+}
+
 
 button {
     background-color: rgb(80, 84, 86);

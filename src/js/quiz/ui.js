@@ -59,7 +59,7 @@ async function setupOptions(options) {
 }
 
 export async function performQuestion(title, options, answer) {
-  answerText = answer;
+  answerText = answer.toString();
 
   setTitle(title);
 

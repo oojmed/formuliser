@@ -5,6 +5,13 @@
 
 ---
 
+## v15 - Release Candidate 1
+
+### Fixes
+- Fixed formula question in compound quizzes not detecting if the answer chosen is correct
+- Fixed mass question in compound quizzes not detecting if the answer chosen is correct
+
+
 ## v15 - Beta 1
 
 ### Features

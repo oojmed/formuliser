@@ -51,7 +51,7 @@ export function performCompoundQuiz(compound) {
       case 'formula':
         questions[i] = [`What is the formula of ${compound.name}?`,
           [subscriptise(randomCompound().formula), subscriptise(compound.formula), subscriptise(randomCompound().formula)],
-          compound.formula];
+          subscriptise(compound.formula)];
         break;
       case 'mass':
         questions[i] = [`What is the relative formula mass of ${compound.name}?`,

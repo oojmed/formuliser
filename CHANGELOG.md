@@ -5,11 +5,18 @@
 
 ---
 
+## v16 - Alpha 2
+
+### Changes
+- Update / change logo
+
+
 ## v16 - Alpha 1
 
 ### Features
 - Now automatically replace 'arrows' (>, ->, =>) with a unicode / proper arrow
 - Now support equations
+- New logo
 
 ### Changes
 - Removed some unused placeholders

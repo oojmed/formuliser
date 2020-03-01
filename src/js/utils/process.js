@@ -1,9 +1,14 @@
 import { subscriptise, unsubscriptise } from '/js/utils/subscriptise';
 
+import { arrowise } from '/js/utils/arrowise';
+import { normalArrow, reversibleArrow, normalToReplace, reversibleToReplace } from '/js/info/arrows';
+
 import * as ComNameGen from '/js/utils/comNameGen';
 
 import { compoundLookup, getCompoundByName, getCompoundsByFormula } from '/js/info/compounds';
 import { periodicLookup, getElementByName, getSymbolFromElement, getElementSymbolByName } from '/js/info/elements';
+
+import * as MassOverlay from '/js/ui/eqMassOverlay';
 
 export function titleCase(s) { // https://stackoverflow.com/a/22193094
   return s.split(' ')
@@ -23,8 +28,104 @@ export function evalExp(s) {
   });
 }
 
+function calcPercents(masses, totalMass) {
+  let percents = [];
+
+  let massesKeys = Object.keys(masses);
+
+  for (let i = 0; i < massesKeys.length; i++) {
+    let k = massesKeys[i];
+
+    percents.push({symbol: k, name: periodicLookup[k].name, percent: masses[k] / totalMass * 100, mass: masses[k]});
+  }
+
+  return percents.sort((a, b) => b.percent - a.percent);
+}
+
+function shownTotalMass(totalMass) {
+  return totalMass === 0 ? '' : parseFloat(totalMass.toPrecision(5));
+}
+
+export function processEquation(formula) {
+  MassOverlay.reset();
+
+  let subformulae = formula.split(normalArrow).map((x) => x.replace(/ /g, '').split('+'));
+
+  if (subformulae[0][0] === '') {
+    return [false, ['', 'No reactants']];
+  }
+
+  if (subformulae[1][0] === '') {
+    return [false, ['', 'No products']];
+  }
+
+  if (subformulae[0].includes('')) {
+    return [false, ['', 'Empty reactant']];
+  }
+
+  if (subformulae[1].includes('')) {
+    return [false, ['', 'Empty product']];
+  }
+
+  let results = subformulae.map((x) => x.map((y) => processFormula(y)));
+
+  let totalMass = 0;
+  let name = '';
+  let masses = {};
+  let i = 0;
+
+  for (let r of results[0].concat(results[1])) {
+    if (r[0] === false) {
+      return r;
+    }
+
+    totalMass += r[1];
+
+    for (let p of r[2]) {
+      masses[p.symbol] = (masses[p.symbol] || 0) + p.mass;
+    }
+
+    name += r[0].split(' - ')[0];
+
+    if (results[0].indexOf(r) === results[0].length - 1) {
+      name += ` ${normalArrow} `;
+    } else {
+      if (results[1].indexOf(r) !== results[1].length - 1) {
+        name += ` + `;
+      }
+    }
+
+    MassOverlay.overlay(subformulae[0].concat(subformulae[1])[i], r[1]);
+
+    i++;
+  }
+
+  let percents = calcPercents(masses, totalMass);
+
+  return [name, shownTotalMass(totalMass), percents];
+}
+
 export function simplifyFormula(formula) {
   let symbols = formula.split(/(?=[A-Z\(\)])/);
+
+  if (/[0-9]/.test(symbols[0][0])) {
+    let big = parseFloat(symbols.shift());
+
+    for (let i = 0; i < symbols.length; i++) {
+      let split = symbols[i].split(/(?=[0-9])/);
+
+      let exp = split.slice(1).join('');
+
+      let num = evalExp(exp);
+      num = isNaN(num) ? 1 : num;
+
+      let final = (big * num);
+      final = final === 1 ? '' : final;
+      final = final.toString();
+
+      symbols[i] = split[0] + final;
+    }
+  }
 
   let multi = [];
   let next = 0;
@@ -79,6 +180,10 @@ export function simplifyFormula(formula) {
 }
 
 export function processFormula(formula, subprocess) {
+  if (formula.includes(normalArrow)) {
+    return processEquation(formula);
+  }
+
   formula = unsubscriptise(formula);
 
   formula = formula.replace(/[^a-z0-9 \(\)\+\-]/gmi, '');
@@ -122,24 +227,24 @@ export function processFormula(formula, subprocess) {
     let n = 1;
 
     if (s.replace(/[^0-9]/gm, "").length > 0) {
-        let numSplit = s.split(/(?=[0-9])/);
+      let numSplit = s.split(/(?=[0-9])/);
 
-        s = numSplit.shift();
+      s = numSplit.shift();
 
-        n = parseFloat(numSplit.join(""));
+      n = parseFloat(numSplit.join(""));
     }
 
     for (let y = 0; y < n; y++) {
-        let el = periodicLookup[s];
+      let el = periodicLookup[s];
 
-        if (el === undefined) { fail = s; break; }
+      if (el === undefined) { fail = s; break; }
 
-        names.push(el.name);
-        totalMass += el.mass;
+      names.push(el.name);
+      totalMass += el.mass;
 
-        masses[s] = (masses[s] || 0) + el.mass;
+      masses[s] = (masses[s] || 0) + el.mass;
 
-        elements.push(el);
+      elements.push(el);
     }
   }
 
@@ -149,17 +254,7 @@ export function processFormula(formula, subprocess) {
     return [false, [elements.length, ' is over the element processing limit']];
   }
 
-  let percents = [];
-
-  let massesKeys = Object.keys(masses);
-
-  for (let i = 0; i < massesKeys.length; i++) {
-    let k = massesKeys[i];
-
-    percents.push({symbol: k, name: periodicLookup[k].name, percent: masses[k] / totalMass * 100, mass: masses[k]});;
-  }
-
-  percents = percents.sort((a, b) => b.percent - a.percent);
+  let percents = calcPercents(masses, totalMass);
 
   let lastName = "";
   let lastCount = 1;
@@ -186,20 +281,23 @@ export function processFormula(formula, subprocess) {
   let namesFinal = namesCombined.join(', ');
 
   if (subprocess !== false) {
-    let compounds = getCompoundsByFormula(formula).map((e) => e.name);
+    let symbols = formula.split(/(?=[A-Z\(\)])/);
+    let comFormula = formula;
+    let comAmount = 1;
 
-    if (compounds.length > 0) {
-      namesFinal = `${compounds.join(' / ')} - ${namesFinal}`;
+    if (/[0-9]/.test(symbols[0][0])) {
+      comAmount = parseFloat(symbols.shift());
+
+      comFormula = symbols.join('');
     }
 
-    /*for (let i = 0; i < compoundLookup.length; i++) {
-      let p = processFormula(compoundLookup[i].formula, false);
+    let compounds = getCompoundsByFormula(comFormula).map((e) => e.name);
 
-      if (namesFinal === p[0]) {
-        namesFinal = `${compoundLookup[i].formula} - ${namesFinal}`;
-        break;
-      }
-    }*/
+    if (compounds.length > 0) {
+      let extra = comAmount === 1 ? '' : ` (x${comAmount})`;
+
+      namesFinal = `${compounds.join(' / ')}${extra} - ${namesFinal}`;
+    }
 
     if (namesFinal === namesCombined.join(', ')) {
       let old = namesFinal;
@@ -218,5 +316,5 @@ export function processFormula(formula, subprocess) {
     namesFinal = '';
   }*/
 
-  return [namesFinal, totalMass === 0 ? '' : parseFloat(totalMass.toPrecision(5)), percents];
+  return [namesFinal, shownTotalMass(totalMass), percents];
 }

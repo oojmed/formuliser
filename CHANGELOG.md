@@ -5,6 +5,24 @@
 
 ---
 
+## v16 - Alpha 1
+
+### Features
+- Now automatically replace 'arrows' (>, ->, =>) with a unicode / proper arrow
+- Now support equations
+
+### Changes
+- Removed some unused placeholders
+- Rename 'auto-subscript' to 'auto-fix' (as it now does arrows as well)
+- Use more accurate width when highlighting
+- Added support for number prefixes
+- Only change image when it actually changes (prevents unneeded requests)
+
+### Fixes
+- Fixed highlighting with unknown formulae causing an error
+- Fixed highlighting only selecting the first section
+
+
 ## v15 - Release Candidate 1
 
 ### Fixes

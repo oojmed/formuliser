@@ -7,6 +7,8 @@ import { compoundLookup, getCompoundByName, getCompoundsByFormula } from '/js/in
 import { periodicLookup, getElementByName, getSymbolFromElement, getElementSymbolByName } from '/js/info/elements';
 import * as Pubchem from '/js/api/pubchem';
 
+import { normalArrow, reversibleArrow, normalToReplace, reversibleToReplace } from '/js/info/arrows';
+
 let oldModelSrc, oldModelLabel;
 
 export function popupify(el) {
@@ -39,7 +41,7 @@ export function popupify(el) {
     document.getElementById('popup').innerHTML = '';
 
     let num = 1;
-    let name = unsubscriptise(el.innerText).replace(',', '').replace(' /', '').replace('*', '').replace(/[0-9]{1,}/g, (_) => { num = _; return ''; }).trim();
+    let name = unsubscriptise(el.innerText).replace(',', '').replace(' /', '').replace('*', '').replace(' + ', '').replace(` ${normalArrow} `, '').replace(/[0-9]{1,}/g, (_) => { num = _; return ''; }).trim();
 
     if (name.indexOf('(') !== -1) {
       name = name.split(' ')[0];
@@ -61,15 +63,19 @@ export function popupify(el) {
     if (element !== undefined) {
       formula = getSymbolFromElement(element) + (num !== 1 ? subscriptise(num.toString()) : '');
       rows = [['Symbol', formula], ['Mass', element.mass * num], ['Atomic', element.atomic], ['Group', element.group], ['Period', element.period], ['Phase (STP)', element.state], ['Desc', element.desc]];
+
+      formula = unsubscriptise(formula).replace(/[0-9]/g, '');
     }
 
     let compound = getCompoundByName(name);
 
     if (compound !== undefined) {
-      formula = (num !== 1 ? num.toString : '') + subscriptise(compound.formula);
+      formula = (num !== 1 ? num.toString() : '') + subscriptise(compound.formula);
       rows = [['Formula', formula], ['Mass', processFormula(compound.formula)[1] * num]];
 
       Pubchem.setImageFromName(name);
+
+      formula = unsubscriptise(formula);
     }
 
     for (let x = 0; x < rows.length; x++) {
@@ -90,31 +96,78 @@ export function popupify(el) {
       document.getElementById('popup').appendChild(row);
     }
 
-    let v = document.getElementById('formula').value;
+    if (formula !== undefined) {
+      let v = unsubscriptise(document.getElementById('formula').value);
 
-    let indexStart = v.indexOf(formula);
-    let indexEnd = indexStart + formula.length - 1;
+      let indexStart = getIndexes(v, formula)[el.id.replace('element-', '')];
 
-    let posStart = getCharPos(indexStart);
-    let posEnd = getCharPos(indexEnd);
+      let indexEnd = indexStart + 1;
 
-    let highlight = document.getElementById('highlight');
-    highlight.style.width = `${posEnd.x - posStart.x + posStart.width}px`;
-    highlight.style.left = `${posStart.x}px`;
-    highlight.style.top = `${posStart.y + 15}px`;
-    highlight.style.display = 'block';
+      while (indexEnd < v.length) {
+        let re = compound === undefined ? /[A-Z\(\)]/ : / /;
+
+        if (re.test(v[indexEnd])) {
+          indexEnd--;
+          break;
+        }
+
+        indexEnd++;
+      }
+
+      if (indexEnd === v.length) {
+        indexEnd--;
+      }
+
+      let posStart = getCharPos(indexStart);
+      let posEnd = getCharPos(indexEnd);
+
+      let amount = indexEnd - indexStart;
+
+      let width = posStart.width;
+      width += amount === 0 ? 0 : posEnd.width;
+
+      if (amount > 1) {
+        for (let i = indexStart + 1; i < indexEnd; i++) {
+          width += getCharPos(i).width;
+        }
+      }
+
+      let highlight = document.getElementById('highlight');
+      highlight.style.width = `${width}px`;
+      highlight.style.left = `${posStart.x}px`;
+      highlight.style.top = `${posStart.y + 15}px`;
+      highlight.style.display = 'block';
+    }
   };
 }
 
+export function getIndexes(str, substring) {
+  let re = new RegExp(substring.replace('(', '\\(').replace(')', '\\)'), 'g');
+  let matches = [];
+  let match = null;
+
+  while ((match = re.exec(str)) != null) {
+    matches.push(match.index);
+  }
+
+  return matches;
+}
+
 export function splitAndPopupify(s) {
-  let split = s.split(/(?=[A-Z])/); // s.split(' ');
+  let split = s.split(/(?=[A-Z])/);
   let els = [];
+  let counts = {};
 
   for (let i = 0; i < split.length; i++) {
+    let name = split[i].replace(', ', '');
+
+    counts[name] = (counts[name] || 0) + 1;
+
     s = s.replace(split[i], '');
 
     let el = document.createElement('span');
     el.innerText = split[i] + ' ';
+    el.id = `element-${counts[name] - 1}`;
 
     if (split[i].trim() !== '-') {
       popupify(el);

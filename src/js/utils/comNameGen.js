@@ -5,7 +5,7 @@ export function generate(s, firstElement) {
 
   let split = s.split(', ');
 
-  if (split.length <= 2) {
+  if (split.length == 2) {
     for (let i = 0; i < split.length; i++) {
       split[i] = split[i].replace(/ygen\b/g, 'ide');
       split[i] = split[i].replace(/ine\b/g, 'ide');

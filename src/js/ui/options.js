@@ -5,8 +5,8 @@ export function init() {
     Settings.installPrompts = document.getElementById("install-switch").checked;
   };
 
-  document.getElementById("autosub-switch").onchange = function() {
-    Settings.autoSubscript = document.getElementById("autosub-switch").checked;
+  document.getElementById("autochange-switch").onchange = function() {
+    Settings.autoChange = document.getElementById("autochange-switch").checked;
   };
 
   document.getElementById("simplify-switch").onchange = function() {

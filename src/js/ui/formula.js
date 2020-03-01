@@ -1,5 +1,8 @@
 import * as Settings from '/js/info/settings';
+
 import { subscriptise, unsubscriptise } from '/js/utils/subscriptise';
+import { arrowise } from '/js/utils/arrowise';
+
 import { popupify, splitAndPopupify } from '/js/ui/popupify';
 
 import { compoundLookup, getCompoundByName, getCompoundsByFormula } from '/js/info/compounds';
@@ -68,8 +71,8 @@ export function interpretInput() {
 
   let value = f.value;
 
-  if (Settings.autoSubscript === true) {
-    value = subscriptise(value);
+  if (Settings.autoChange === true) {
+    value = subscriptise(arrowise(unsubscriptise(value)));
   }
 
   let s = f.selectionStart;
@@ -106,7 +109,7 @@ export function interpretInput() {
     let dashSplit = body.split(' - ');
 
     if (dashSplit.length === 2 && dashSplit[0].indexOf('*') === -1) {
-      let name = dashSplit[0].replace('*', '').split(' / ')[0];
+      let name = dashSplit[0].replace('*', '').split(' / ')[0].split('(')[0];
 
       name = revCompound === undefined ? name : titleCase(value);
 

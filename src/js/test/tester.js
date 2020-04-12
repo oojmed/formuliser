@@ -133,7 +133,7 @@ function actualTest() {
     
     header.innerText = `[Run ${run + 1}] ${totalCategoriesPassed}/${Tests.length} categories - ${totalIndividualsPassed}/${totalIndividuals} tests`;
     
-    document.getElementById('testing-right').innerHTML = `Total ${((performance.now() - timeStart) / 1000).toFixed(2)}s | TPS ${Math.round((run / (performance.now() - timeStart)) * 1000)} | ${Math.round((performance.now() - timeStart) / run)}ms`;
+    document.getElementById('testing-right').innerHTML = `Total ${((performance.now() - timeStart) / 1000).toFixed(2)}s | TPS ${Math.round((run / (performance.now() - timeStart)) * 1000)} | Average ${Math.round((performance.now() - timeStart) / run)}ms`;
   
     if (totalCategoriesPassed !== Tests.length || run + 1 === runs) {
       running = false;

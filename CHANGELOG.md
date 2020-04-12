@@ -5,6 +5,12 @@
 
 ---
 
+## v2.0.1
+
+### Changes
+- Add name to average run time label to test overlay
+
+
 ## v2.0.0
 
 ### Features

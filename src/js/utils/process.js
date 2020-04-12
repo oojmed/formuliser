@@ -22,12 +22,7 @@ export function evalExp(s) {
   while (/([0-9\.]+)[+\-/*]([0-9\.]+)/g.test(m)) {
     m = m.replace(/([0-9\.]+)\/([0-9\.]+)/g, (_, one, two) => parseFloat(one) / parseFloat(two));
     m = m.replace(/([0-9\.]+)\*([0-9\.]+)/g, (_, one, two) => parseFloat(one) * parseFloat(two));
-    m = m.replace(/([0-9\.\-]+)([\+\-])([0-9\.]+)/g, (_, one, op, two) => {
-      return op === '+' ? evalExp(one) + evalExp(two) : evalExp(one) - evalExp(two)
-    });
-
-    // m = m.replace(/([0-9\.]+)\-([0-9\.]+)/g, (_, one, two) => parseFloat(one) - parseFloat(two));
-    // m = m.replace(/([0-9\.]+)\+([0-9\.]+)/g, (_, one, two) => parseFloat(one) + parseFloat(two));
+    m = m.replace(/([0-9\.\-]+)([\+\-])([0-9\.]+)/g, (_, one, op, two) => op === '+' ? evalExp(one) + evalExp(two) : evalExp(one) - evalExp(two));
   }
 
   return parseFloat(m);

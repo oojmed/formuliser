@@ -133,16 +133,16 @@ function actualTest() {
     
     header.innerText = `[Run ${run + 1}] ${totalCategoriesPassed}/${Tests.length} categories - ${totalIndividualsPassed}/${totalIndividuals} tests`;
     
-    document.getElementById('testing-right').innerHTML = `Total ${((performance.now() - timeStart) / 1000).toFixed(2)}s | TPS ${Math.round((run / (performance.now() - timeStart)) * 1000)} | Average ${Math.round((performance.now() - timeStart) / run)}ms`;
+    let tps = (run / (performance.now() - timeStart)) * 1000;
+
+    document.getElementById('testing-right').innerHTML = `Total ${((performance.now() - timeStart) / 1000).toFixed(2)}s | TPS ${Math.round(tps)} | ETA ${((((runs / tps) * 1000) - (performance.now() - timeStart)) / 1000).toFixed(2)}s | Average ${Math.round((performance.now() - timeStart) / run)}ms`;
   
     if (totalCategoriesPassed !== Tests.length || run + 1 === runs) {
       running = false;
       loadingParent.className = '';
+
+      document.getElementById('testing-right').innerHTML = `Total ${((performance.now() - timeStart) / 1000).toFixed(2)}s | Average ${Math.round((performance.now() - timeStart) / run)}ms`;
     }
     }, 0);
   }
-  
-  //loadingParent.className = '';
-
-  //running = false;
 }

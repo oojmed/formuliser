@@ -5,6 +5,13 @@
 
 ---
 
+## v2.0.2
+
+### Features
+- Added ETA whilst testing is ongoing
+- Hide some details once testing is complete
+
+
 ## v2.0.1
 
 ### Changes

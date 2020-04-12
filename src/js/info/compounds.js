@@ -122,6 +122,8 @@ compoundLookup = compoundLookup.sort(function(a, b) {
   return 0;
 });
 
+export default compoundLookup;
+
 export function getCompoundByName(name) {
   return compoundLookup.find(c => c.name.toLowerCase() === name.toLowerCase());
 }

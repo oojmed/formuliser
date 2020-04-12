@@ -17,15 +17,20 @@ export function titleCase(s) { // https://stackoverflow.com/a/22193094
 }
 
 export function evalExp(s) {
-  let m = s.replace(/\s/g, '').match(/[+\-]?([0-9\.]+)/g) || [];
+  let m = s.replace(/\s/g, '');
 
-  if (m.length < 1) {
-    return NaN;
+  while (/([0-9\.]+)[+\-/*]([0-9\.]+)/g.test(m)) {
+    m = m.replace(/([0-9\.]+)\/([0-9\.]+)/g, (_, one, two) => parseFloat(one) / parseFloat(two));
+    m = m.replace(/([0-9\.]+)\*([0-9\.]+)/g, (_, one, two) => parseFloat(one) * parseFloat(two));
+    m = m.replace(/([0-9\.\-]+)([\+\-])([0-9\.]+)/g, (_, one, op, two) => {
+      return op === '+' ? evalExp(one) + evalExp(two) : evalExp(one) - evalExp(two)
+    });
+
+    // m = m.replace(/([0-9\.]+)\-([0-9\.]+)/g, (_, one, two) => parseFloat(one) - parseFloat(two));
+    // m = m.replace(/([0-9\.]+)\+([0-9\.]+)/g, (_, one, two) => parseFloat(one) + parseFloat(two));
   }
 
-  return m.reduce(function(sum, value) {
-    return parseFloat(sum) + parseFloat(value);
-  });
+  return parseFloat(m);
 }
 
 function calcPercents(masses, totalMass) {
@@ -186,7 +191,7 @@ export function processFormula(formula, subprocess) {
 
   formula = unsubscriptise(formula);
 
-  formula = formula.replace(/[^a-z0-9 \(\)\+\-]/gmi, '');
+  formula = formula.replace(/[^a-z0-9 \(\)+\-*/]/gmi, '');
 
   let reverseElement = getElementByName(formula);
 
@@ -248,7 +253,7 @@ export function processFormula(formula, subprocess) {
     }
   }
 
-  if (fail) { return [false, [fail, ' is not recongised']]; }
+  if (fail) { return [false, [fail, ' is not recognised']]; }
 
   if (elements.length >= 10000) {
     return [false, [elements.length, ' is over the element processing limit']];
@@ -306,6 +311,15 @@ export function processFormula(formula, subprocess) {
 
       if (old !== namesFinal) {
         namesFinal = `${namesFinal}* - ${old}`;
+      } else {
+        if (comFormula !== formula) {
+          let processWithoutNumPrefix = processFormula(comFormula)[0];
+          let gen = ComNameGen.generate(processWithoutNumPrefix);
+
+          if (processWithoutNumPrefix !== gen) {
+            namesFinal = `${gen.split(' - ')[0]} (x${comAmount}) - ${old}`;
+          }
+        }
       }
     }
   }

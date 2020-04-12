@@ -1,0 +1,107 @@
+# Formuliser Compounds
+- Abietic Acid - C₂₀H₃₀O₂
+- Acetic Acid - CH₃COOH
+- Acetone - C₃H₆O
+- Ammonia - NH₃
+- Ammonium - NH₄
+- Andalusite - Al2O₅Si
+- Arsine - AsH₃
+- Baking Soda - NaHCO₃
+- Barite - BaSO₄
+- Barrelene - C₈H₈
+- Benzene - C₆H₆
+- Benzil - (C₆H₅CO)2
+- Benzoic Acid - C₇H₆O₂
+- Benzoin - C₁₄H₁₂O₂
+- Benzyl Alcohol - C₆H₅CH₂OH
+- Bicarbonate - HCO₃
+- Borazine - B₃N₃H₆
+- Buckminsterfullerene - C₆₀
+- Bullvalene - C₁₀H₁₀
+- Butane - C₄H₁₀
+- Cacodylic Acid - C₂H₇AsO₂
+- Cadaverine - C₅H₁₄N₂
+- Caffeine - C₈H₁₀N₄O₂
+- Camphor - C₁₀H₁₆O
+- Carbonate - CO₃
+- Carbonic Acid - H₂CO₃
+- Chiolite - Al3F₁₄Na5
+- Chloroform - CHCl3
+- Citric Acid - C₆H₈O₇
+- Cryolite - AlF₆Na3
+- Cyanide - CN
+- Decaborane - B₁₀H₁₄
+- Dickite - Al2Si2O₅(OH)4
+- Dodecahedrane - C₂₀H₂₀
+- Epinephrine - C₉H₁₃NO₃
+- Ethane - C₂H₆
+- Ethanol - C₂H₅OH
+- Ethene - C₂H₄
+- Ethylene - C₂H₄
+- Ferrocene - C₁₀H₁₀Fe
+- Fluorene - C₁₃H₁₀
+- Fluorosulfuric Acid - FSO₃H
+- Formaldehyde - CH₂O
+- Formic Acid - HCOOH
+- Fructose - C₆H₁₂O₆
+- Galactose - C₆H₁₂O₆
+- Gillespite - BaFeSi4O₁₀
+- Glucose - C₆H₁₂O₆
+- Glutamic Acid - C₅H₉NO₄
+- Glycerol - C₃H₈O₃
+- Glycine - C₂H₅NO₂
+- Hexane - C₆H₁₄
+- Housane - C₅H₈
+- Hydrochloric Acid - HCl
+- Hydrogen Peroxide - H₂O₂
+- Hydroxide - OH
+- Hypophosphoric Acid - H₄P₂O₆
+- Ibuprofen - C₁₃H₁₈O₂
+- Iodic Acid - HIO₃
+- Isoborneol - C₁₀H₁₈O
+- Isoleucine - C₆H₁₃NO₂
+- Isoprene - C₅H₈
+- Isopropanol - C₃H₈O
+- Isopropyl Alcohol - C₃H₈O
+- Lactic Acid - C₃H₆O₃
+- Lactose - C₁₂H₂₂O₁₁
+- Leucine - C₆H₁₃NO₂
+- Limestone - CaCO₃
+- Lysine - C₆H₁₄N₂O₂
+- Maltose - C₁₂H₂₂O₁₁
+- Metaphosphoric Acid - HPO₃
+- Methane - CH₄
+- Methanol - CH₃OH
+- Mullite - Al6O₁₃Si2
+- Nitrate - NO₃
+- Nitric Acid - HNO₃
+- Octane - C₈H₁₈
+- Orthophosphoric Acid - H₃PO₄
+- Ozone - O₃
+- Penguinone - C₁₀H₁₄O
+- Phosphate - PO₄
+- Phosphorous Acid - H₃PO₃
+- Prismane - C₆H₆
+- Propane - C₃H₈
+- Pyrophosphoric Acid - H₄P₂O₇
+- Quadratic Acid - C₄H₂O₄
+- Quicklime - CaO
+- Rust - Fe2O₃
+- Silica - SiO₂
+- Silica Aerogel - C₂₃H₂₂N₂O₃S₂
+- Sucrose - C₁₂H₂₂O₁₁
+- Sulfate - SO₄
+- Sulfuric Acid - H₂SO₄
+- Table Salt - NaCl
+- Tetrahydrofuran - C₄H₈O
+- Toluene - C₇H₈
+- Urea - CH₄N₂O
+- Uric Acid - C₅H₄N₄O₃
+- Valine - C₅H₁₁NO₂
+- Vanillin - C₈H₈O₃
+- Veratraldehyde - C₉H₁₀O₃
+- Vinegar - C₂H₄O₂
+- Water - H₂O
+- Xenic Acid - H₂XeO₄
+- Yohimbine (Hydrochloride) - C₂₁H₂₆N₂O₃
+- Zeise's Salt - C₂H₆Cl3KOPt

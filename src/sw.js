@@ -11,7 +11,7 @@ registerRoute(
   // Use cache but update in the background.
   new StaleWhileRevalidate({
     // Use a custom cache name.
-    cacheName: 'css-cache',
+    cacheName: 'code-cache',
   })
 );
 

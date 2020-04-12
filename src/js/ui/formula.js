@@ -8,9 +8,11 @@ import { popupify, splitAndPopupify } from '/js/ui/popupify';
 import { compoundLookup, getCompoundByName, getCompoundsByFormula } from '/js/info/compounds';
 import { titleCase, evalExp, simplifyFormula, processFormula } from '/js/utils/process';
 
+import * as Tester from '/js/test/tester';
+
 import * as Pubchem from '/js/api/pubchem';
 
-let f = document.getElementById('formula');
+let f;
 
 export function init() {
   f = document.getElementById('formula');
@@ -48,6 +50,10 @@ export function init() {
         f.value = formula;
 
         interpretInput();
+      }
+
+      if (formula.startsWith('test')) {
+        Tester.performTests(parseInt(formula.substring(4)) * 1000 || 1000);
       }
     }
   };

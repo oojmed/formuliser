@@ -13,25 +13,20 @@ function reverseStr(str) {
 }
 
 export function subscriptise(value) {
-  /*
-    You might be wondering what is happening below,
-    as most (modern) browsers don't support lookbehinds in regex yet (https://caniuse.com/#feat=js-regexp-lookbehind)
-    you can't use them.
-
-    So instead we reverse the regex,
-    and reverse the string before doing it,
-    then reverse it when finished.
-
-    I'm sorry.
-  */
-
-  value = reverseStr(value).replace(/([0-9]+)(?=.*[A-Z])/gm, function(_, one) {
+  value = reverseStr(value).replace(/([0-9+\-*/]+)([A-Za-z+\-*/])/gm, function(_, num, symbol) {
     let s = '';
-    for (let c of _) {
+    for (let c of num) {
+      c = c === '+' ? 20 : c;
+      c = c === '-' ? 21 : c;
+      c = c === '*' ? 22 : c;
+      c = c === '/' ? 23 : c; 
+
       s += scriptsLookupKeys[c];
     }
 
-    return s;
+    // console.log(_, num, symbol, s + symbol);
+
+    return s + symbol;
   });
 
   value = reverseStr(value);

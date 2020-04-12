@@ -514,6 +514,215 @@ option {
     text-align: center;
 }
 
+#testing {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+
+    background-color: rgba(0, 0, 0, .8);
+
+    backdrop-filter: saturate(180%) blur(5px);
+
+    z-index: 999;
+
+    height: 0;
+    opacity: 0;
+
+    transition: all 1s;
+}
+
+summary:focus {
+    outline: none !important;
+}
+
+summary {
+    cursor: pointer;
+}
+
+/*details[open] summary h2 {
+    margin-bottom: 10px;
+}
+
+summary h4::after {
+    position: absolute;
+    right: 20px;
+
+    content: '+';
+}
+
+details[open] summary h4::after {
+    content: '-';
+}
+
+summary::-webkit-details-marker {
+    display: none
+}*/
+
+summary::-webkit-details-marker {
+    margin-bottom: 2.5px;
+}
+
+#testing-content h2 {
+    margin-top: 0;
+    margin-bottom: 0;
+
+    display: inline-block;
+
+    width: calc(100% - 20px);
+}
+
+#testing-content h2 > h4 {
+    float: right;
+
+    font-weight: normal;
+    font-size: 16px;
+
+    margin-top: 5px;
+    margin-right: 40px;
+
+    display: block;
+
+    color: rgba(255, 255, 255, .87);
+}
+
+#testing-content h4 {
+    font-weight: normal;
+
+    margin-top: 0;
+    margin-bottom: 5px;
+
+    margin-left: 40px;
+}
+
+#testing-content > details {
+    margin-bottom: 15px;
+}
+
+/*#testing-content > details > div {
+    max-height: 200px;
+    overflow: auto;
+}*/
+
+details[open] summary ~ * {
+    animation: sweep .5s ease-in-out;
+}
+  
+@keyframes sweep {
+    0%    {opacity: 0; margin-left: -40px}
+    100%  {opacity: 1; margin-left: 0px}
+}
+
+#testing.show {
+    height: 100%;
+    opacity: 1;
+}
+
+#testing-header {
+    float: left;
+
+    margin-top: 15px;
+    margin-left: 15px;
+
+    margin-bottom: 15px;
+}
+
+#testing-right {
+    float: right;
+    text-align: right;
+
+    margin-top: 15px;
+    margin-right: 15px;
+    
+    margin-bottom: 0;
+}
+
+#testing-content {
+    margin-left: 40px;
+
+    width: calc(100% - 40px);
+
+    height: calc(100% - 90px);
+
+    overflow: auto;
+}
+
+#testing-loading.show {
+    opacity: .8;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#testing-loading {
+    opacity: 0;
+
+    width: 75%;
+
+    transition: opacity .5s;
+
+    position: absolute;
+
+    top: -999px;
+
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#testing-loading-label {
+    text-align: center;
+    width: 100%;
+
+    display: block;
+    font-size: 36px;
+}
+
+#testing-loading-bar {
+    width: 100%;
+    height: 20px;
+
+    border-radius: 1px;
+}
+
+#testing-loading-bar::-webkit-progress-bar {
+    background-color: rgba(50, 50, 50, .8);
+}
+
+#testing-loading-bar::-webkit-progress-value {
+    background-color: rgba(150, 150, 150, .8);
+}
+
+*:not(h2).test-pass::before, *:not(h2).test-fail::before {
+    content: attr(before-text);
+    margin-right: 5px;
+}
+
+.test-pass::before {
+    color: #87CA00;
+}
+
+.test-fail::before {
+    color: #FF0000;
+}
+
+h2.test-pass {
+    color: #CFFF70;
+}
+
+h2.test-fail {
+    color: #FF7070;
+}
+
+*:not(h2).test-fail, h1.test-fail {
+    color: #D90000;
+}
+
+h1.test-pass {
+    color: #689C00;
+}
 
 #quiz {
     position: absolute;

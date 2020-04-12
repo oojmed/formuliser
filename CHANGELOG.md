@@ -5,6 +5,20 @@
 
 ---
 
+## v2.0.0
+
+### Features
+- Add support for number prefixes **and** comNameGen in one compound - Eg: 2NaOH = Sodium Hydroxide (x2) instead of just the list
+- New expression evaluation system - multiplication and division now supported
+- New testing system (insert formula 'test' and then press enter)
+- New version system, now following semantic versioning (v2.0.0 instead of v17, etc.)
+- New backend compound markdown generation
+
+### Fixes
+- New subscriptiser system - fixes some minor bugs with some number prefixes being replaced when they shouldn't be, works properly with expressions in suffixes, and added support for operators (+, -, /, *)
+- Fixed spelling mistake with 'X is not recognised' error text
+
+
 ## v16 - Alpha 2
 
 ### Changes

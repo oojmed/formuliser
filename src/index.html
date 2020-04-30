@@ -48,7 +48,7 @@
     <div id="options">
         <div id="options-panel">
             <div id="info">
-                Formuliser v2.0.2
+                Formuliser v3.0.0 <a id="changelogLink" href="javascript:void(0);">(changelog)</a>
                 <a href="https://github.com/oojmed/formuliser">Source (GitHub)</a>
             </div>
 
@@ -92,7 +92,7 @@
     </div>
 
     <div id="compounds">
-        <div id="compounds-panel">
+        <div class="panel">
             <input title="Search compound" placeholder="Search compound" type="text" name="compound-search" id="compound-search"></input>
 
             <select id="compound-sort">
@@ -107,6 +107,25 @@
 
         <div id="compounds-drawer">
             <
+        </div>
+    </div>
+
+    <div id="equations">
+        <div class="panel">
+            <input title="Search compound" placeholder="Search equation" type="text" name="compound-search" id="equation-search"></input>
+
+            <select id="equation-sort">
+                <option value="abc">Abc</option>
+                <option value="zyx">Zyx</option>
+            </select>
+
+            <div id="equation-list">
+
+            </div>
+        </div>
+
+        <div id="equations-drawer">
+            >
         </div>
     </div>
 
@@ -146,4 +165,264 @@
     </div>
 
     <div id="highlight"></div>
+
+    <div id="changelog">
+        <h1>Formuliser Changelog</h1>
+
+        <h2>v3.0.0</h2>
+        
+        <h3>Features</h3>
+        
+        <h4>Equations Panel</h4>
+        
+        <ul><li>Added equations panel which shows equations and allows searching (and sorting), essentially the same as the compound panel but with equations</li></ul>
+        
+        <h4>Equation Balancing</h4>
+        
+        <ul><li>Added balancing equations on enter (with the simplify on enter option enabled)</li></ul>
+        
+        <h4>Unbalanced Equation Overlay</h4>
+        
+        <ul><li>Added unused molecules below the equation (for both sides)</li></ul>
+        
+        <h4>Changelog Window</h4>
+        
+        <ul><li>Added the changelog window (opened by clicking the changelog link from the about panel)</li></ul>
+        
+        <h4>Arrow Replacing</h4>
+        
+        <ul><li>Replace <code>&lt;-&gt;</code> and <code>&lt;=&gt;</code> with a reversible arrow (⇌)</li></ul>
+        
+        <h3>Fixes</h3>
+        
+        <h4>Highlighting UI</h4>
+        
+        <ul><li>Don't highlight ' +' and ' →' when hovering over compound text</li><li>Be more exact with highlighting elements with a number (eg: O2 will be more exact with surrounding oxygen elements)</li><li>Overhaul counting system in popupify</li></ul>
+        
+        <h4>Equation Mass Overlay</h4>
+        
+        <ul><li>Mass overlay is correctly removed when equation is changed from an equation into a regular formula</li><li>Same more exact improvements using the new index and range getting system as the highlighting UI</li></ul>
+        
+        <h4>Styling</h4>
+        
+        <ul><li>Fixed cursor styling of elements</li><li>Fixed the bottom left corner of the compounds panel drawer not being curved</li></ul>
+        
+        <h4>Simplify Formula</h4>
+        
+        <ul><li>Fixed subscriptised formulas passed breaking number prefixes</li></ul>
+        
+        <h2>v2.0.2</h2>
+        
+        <h3>Features</h3>
+        
+        <ul><li>Added ETA whilst testing is ongoing</li><li>Hide some details once testing is complete</li></ul>
+        
+        <h2>v2.0.1</h2>
+        
+        <h3>Changes</h3>
+        
+        <ul><li>Add name to average run time label to test overlay</li></ul>
+        
+        <h2>v2.0.0</h2>
+        
+        <h3>Features</h3>
+        
+        <ul><li>Add support for number prefixes <strong>and</strong> comNameGen in one compound - Eg: 2NaOH = Sodium Hydroxide (x2) instead of just the list</li><li>New expression evaluation system - multiplication and division now supported</li><li>New testing system (insert formula 'test' and then press enter)</li><li>New version system, now following semantic versioning (v2.0.0 instead of v17, etc.)</li><li>New backend compound markdown generation</li></ul>
+        
+        <h3>Fixes</h3>
+        
+        <ul><li>New subscriptiser system - fixes some minor bugs with some number prefixes being replaced when they shouldn't be, works properly with expressions in suffixes, and added support for operators (+, -, /, *)</li><li>Fixed spelling mistake with 'X is not recognised' error text</li></ul>
+        
+        <h2>v16 - Alpha 2</h2>
+        
+        <h3>Changes</h3>
+        
+        <ul><li>Update / change logo</li></ul>
+        
+        <h2>v16 - Alpha 1</h2>
+        
+        <h3>Features</h3>
+        
+        <ul><li>Now automatically replace 'arrows' (&gt;, -&gt;, =&gt;) with a unicode / proper arrow</li><li>Now support equations</li><li>New logo</li></ul>
+        
+        <h3>Changes</h3>
+        
+        <ul><li>Removed some unused placeholders</li><li>Rename 'auto-subscript' to 'auto-fix' (as it now does arrows as well)</li><li>Use more accurate width when highlighting</li><li>Added support for number prefixes</li><li>Only change image when it actually changes (prevents unneeded requests)</li></ul>
+        
+        <h3>Fixes</h3>
+        
+        <ul><li>Fixed highlighting with unknown formulae causing an error</li><li>Fixed highlighting only selecting the first section</li></ul>
+        
+        <h2>v15 - Release Candidate 1</h2>
+        
+        <h3>Fixes</h3>
+        
+        <ul><li>Fixed formula question in compound quizzes not detecting if the answer chosen is correct</li><li>Fixed mass question in compound quizzes not detecting if the answer chosen is correct</li></ul>
+        
+        <h2>v15 - Beta 1</h2>
+        
+        <h3>Features</h3>
+        
+        <ul><li>Highlight relevant part of formula when hovering over element or compound</li><li>Added quiz for compounds in the compound panel (right click an option)</li></ul>
+        
+        <h2>v14 - Release Candidate 1</h2>
+        
+        <h3>Fixes</h3>
+        
+        <ul><li>Fixed that updates (service worker side) would not be installed</li></ul>
+        
+        <h2>v14 Beta 1</h2>
+        
+        <h3>Fixes</h3>
+        
+        <ul><li>Added .ico to precache rule</li><li>[Dev] Update .gitignore to include Netlify directory</li></ul>
+        
+        <h2>v14 Alpha 5</h2>
+        
+        <h3>Fixes</h3>
+        
+        <ul><li>Now precache with new service worker</li><li>Fixed drag panels not working</li></ul>
+        
+        <h2>v14 Alpha 4</h2>
+        
+        <h3>Fixes</h3>
+        
+        <ul><li>[Backend / Dev] Fixed build script</li></ul>
+        
+        <h2>v14 Alpha 3</h2>
+        
+        <h3>Fixes</h3>
+        
+        <ul><li>Fixed service worker (now using Workbox)</li></ul>
+        
+        <h2>v14 Alpha2</h2>
+        
+        <h3>Fixes</h3>
+        
+        <ul><li>Fixed install prompts not working</li></ul>
+        
+        <h2>v14 Alpha1</h2>
+        
+        <h3>Fixes</h3>
+        
+        <ul><li>Fixed popups / left panel not working with elements with more than one number (H12 displaying as H2 and not H12)</li><li>Rewrote and organised JS, fixing many minor bugs</li></ul>
+        
+        <h2>v13</h2>
+        
+        <h3>Features</h3>
+        
+        <ul><li>Added 1 new compound (105 &gt; 106 total) (v13 dev1)<ul><li>Carbonic Acid (H2CO3)</li></ul></li><li>Added pane to the (top) left on hover of compounds and elements which shows information</li><li>Added 2d structure diagram (from PubChem) when a compound (only in the dictionary) is being shown</li></ul>
+        
+        <h3>Changes</h3>
+        
+        <ul><li>Mass percentages / popup now only showes on hover</li></ul>
+        
+        <h3>Fixes</h3>
+        
+        <ul><li>Fixed all the new (not name, symbol or mass) data being offset / wrong</li></ul>
+        
+        <h2>v12</h2>
+        
+        <p>(Changelog lost)</p>
+        
+        <h2>v11</h2>
+        
+        <h3>Features</h3>
+        
+        <ul><li>Added swipe support for showing and hiding panels (v11 rc1)</li></ul>
+        
+        <h2>v10</h2>
+        
+        <h3>Features</h3>
+        
+        <ul><li><strong>Added sorting options to compound search</strong>: (v10 rc1)<ul><li>Abc (Alphabetical)</li><li>Zyx (Reverse Alphabetical)</li></ul></li><li>'Fix' formula for ethanol (v10 rc2)</li><li>Fix some formatting in code (v10 rc2)</li><li>Autofocus on compound search when compound panel drawn (v10 rc2)</li><li>~~Use new search method for searching compounds~~ Implement new search system in backend (but still using the old method for now) (v10 rc3, rc4)</li><li>Added 15 new compounds (90 &gt; 105 total) - Over 100, yay! (v10 rc5)<ul><li>Urea (CH4N2O)</li><li>Uric Acid (C5H4N4O3)</li><li>Ibuprofen (C13H18O2)</li><li>Iodic Acid (HIO3)</li><li>Isopropyl Alcohol (C3H8O)</li><li>Isopropanol (C3H8O)</li><li>Isoprene (C5H8)</li><li>Isoleucine (C6H13NO2)</li><li>Isoborneol (C10H18O)</li><li>Benzil ((C6H5CO)2)</li><li>Benzoic Acid (C7H6O2)</li><li>Benzoin (C14H12O2)</li><li>Benzyl Alcohol (C6H5CH2OH)</li><li>Orthophosphoric Acid (H3PO4)</li><li>Maltose (C12H22O11)</li></ul></li></ul>
+        
+        <h2>v9</h2>
+        
+        <h3>Features</h3>
+        
+        <ul><li>Rewrote compounds system to allow several compounds with the same formula</li><li>Added 31 new compounds (59 &gt; 90 total): (- there has been a miscalculation in the total of the last updates)<ul><li>Zeise\'s Salt (C2H6Cl3KOPt)</li><li>Xenic Acid (H2XeO4)</li><li>Pyrophosphoric Acid (H4P2O7)</li><li>Phosphorous Acid (H3PO3)</li><li>Metaphosphoric Acid (HPO3)</li><li>Hypophosphoric Acid (H4P2O6)</li><li>Yohimbine (Hydrochloride) (C21H26N2O3)</li><li>Fluorosulfuric Acid (FSO3H)</li><li>Formaldehyde (CH2O)</li><li>Fluorene (C13H10)</li><li>Ferrocene (C10H10Fe)</li><li>Abietic Acid (C20H30O2)</li><li>Fructose (C6H12O6)</li><li>Formic Acid (HCOOH)</li><li>Valine (C5H11NO2)</li><li>Vanillin (C8H8O3)</li><li>Veratraldehyde (C9H10O3)</li><li>Lactic Acid (C3H6O3)</li><li>Lysine (C6H14N2O2)</li><li>Leucine (C6H13NO2)</li><li>Galactose (C6H12O6)</li><li>Glutamic Acid (C5H9NO4)</li><li>Glycerol (C3H8O3)</li><li>Glycine (C2H5NO2)</li><li>Caffeine (C8H10N4O2)</li><li>Cacodylic Acid (C2H7AsO2)</li><li>Cadaverine (C5H14N2)</li><li>Decaborane (B10H14)</li><li>Epinephrine (C9H13NO3)</li><li>Ethane (C2H6)</li><li>Ethene (C2H4)</li></ul></li><li>Remade changelog compound regex (see top)</li><li>Made compounds panel larger (width)</li><li>Added results to bottom of the compound search stating how many compounds appeared in the results</li></ul>
+        
+        <h2>v8</h2>
+        
+        <h3>Features</h3>
+        
+        <ul><li>Added 10 new compounds (50 &gt; 60 total):<ul><li>Silica aerogel (C23H22N2O3S2)</li><li>Lactose (C12H22O11)</li><li>Barrelene (C8H8)</li><li>Dodecahedrane (C20H20)</li><li>Housane (C5H8)</li><li>Prismane (C6H6)</li><li>Quadratic Acid (C4H2O4)</li><li>Bullvalene (C10H10)</li><li>Dickite (Al2Si2O5(OH)4)</li><li>Penguinone (C10H14O)</li></ul></li><li>Added compound panel with:<ul><li>Compound search</li><li>List of compounds</li></ul></li><li>Added option for auto subscriptise (still enabled by default)</li><li>Added 'No' option to install snackbar</li></ul>
+        
+        <h3>Changes</h3>
+        
+        <ul><li>Make options size constant for large (600px+) size</li></ul>
+        
+        <h2>v7</h2>
+        
+        <h3>Features</h3>
+        
+        <ul><li>Added support for arthimetic in numbers eg: CO2+1</li><li>Use subscript when showing formula for compounds when reversing</li><li>Auto subscript +'s and -'s</li><li>Added panel at top<ul><li>Moved info into panel</li></ul></li><li>Added new on enter features:<ul><li>Reverse</li><li>Simplify</li></ul></li><li>Now show the element's symbol when doing a reverse symbol lookup</li><li>Added missing elements:<ul><li>Unbibium</li><li>Unbihexium</li><li>Unbipentium</li><li>Unbiquadium</li><li>Unbitrium</li></ul></li></ul>
+        
+        <h2>v6.0.0</h2>
+        
+        <h3>Features</h3>
+        
+        <ul><li>PWA</li></ul>
+        
+        <h3>Changes</h3>
+        
+        <ul><li>Links now have nice(r) colors</li><li>Information and mass offsets are now in pixels and not percentages</li><li>Information is now in the top right corner</li><li>Updated UI to have colder and less bright darks</li><li>Show formula when typing in a compound name</li><li>Reposition the formula to be higher</li><li>No longer focus on input immediately when it loses focus, as this disallows highlighting text, now only focus on key press</li><li>Small QOL and accessibility improvements</li></ul>
+        
+        <h3>Fixes</h3>
+        
+        <ul><li>Fixed bracket multipliers adding instead of multiplying</li></ul>
+        
+        <h2>v5.0.0</h2>
+        
+        <h3>Features</h3>
+        
+        <ul><li>Added support for brackets</li></ul>
+        
+        <h3>Fixes</h3>
+        
+        <ul><li>Don't crash if the number of elements doesn't have a number prefix</li><li>Don't lose / reset the cursor position when updating the value of the formula input</li></ul>
+        
+        <h2>v4.0.0</h2>
+        
+        <h3>Features</h3>
+        
+        <ul><li>Completely remade / revamped the procedural compound name generation system</li><li>Added a limit for processing elements (10000) to stop crashes</li><li>Added <strong>24</strong> new compounds (26 &gt; 50 total):<ul><li>Silica (SiO2)</li><li>Hydroxide (OH)</li><li>Ozone (O3)</li><li>Rust (Fe2O3)</li><li>Quicklime (CaO)</li><li>Limestone (CaCO3)</li><li>Carbonate (CO3)</li><li>Bicarbonate (HCO3)</li><li>Phosphate (PO4)</li><li>Ammonium (NH4)</li><li>Cyanide (CN)</li><li>Nitrate (NO3)</li><li>Toluene (C7H8)</li><li>Sulfate (SO4)</li><li>Chiolite (Al3F14Na5)</li><li>Cryolite (AlF6Na3)</li><li>Andalusite (Al2O5Si)</li><li>Mullite (Al6O13Si2)</li><li>Chiolite (Al3F14Na5)</li><li>Arsine (AsH3)</li><li>Borazine (B3N3H6)</li><li>Gillespite (BaFeSi4O10)</li><li>Barite (BaSO4)</li><li>Chloroform (CHCl3)</li></ul></li></ul>
+        
+        <h3>Changes</h3>
+        
+        <ul><li>Slightly change description in HTML meta</li><li>Made elements / information below the formula be <code>40% + 120px</code> (120px below the formula)</li></ul>
+        
+        <h3>Fixes</h3>
+        
+        <ul><li>Changed changelog regex to remove commas from compound list</li></ul>
+        
+        <h2>v3.0.0</h2>
+        
+        <h3>Features</h3>
+        
+        <ul><li>Added support for reverse elements</li><li>Added support reverse compounds</li><li>Added procedural compound name generation (only with 2 elements for now)</li><li>Updated format of how compounds are shown</li><li>Added <strong>20</strong> new compounds (6 &gt; 26 total):<ul><li>Octane (C8H18)</li><li>Baking Soda (NaHCO3)</li><li>Methane (CH4)</li><li>Ammonia (NH3)</li><li>Benzene (C6H6)</li><li>Ethanol (C2H6O)</li><li>Hydrogen Peroxide (H2O2)</li><li>Acetic Acid (CH3COOH)</li><li>Methanol (CH3OH)</li><li>Buckminsterfullerene (C60)</li><li>Ethylene (C2H4)</li><li>Acetone (C3H6O)</li><li>Butane (C4H10)</li><li>Citric Acid (C6H8O7)</li><li>Tetrahydrofuran (C4H8O)</li><li>Hexane (C6H14)</li><li>Propane (C3H8)</li><li>Vinegar (C2H4O2)</li><li>Camphor (C10H16O)</li><li>Salt (NaCl)</li></ul></li></ul>
+        
+        <h3>Fixes</h3>
+        
+        <ul><li>Made information in the bottom right behind everything else</li></ul>
+        
+        <h2>v2.1.0</h2>
+        
+        <h3>Features</h3>
+        
+        <ul><li>Added version and information to bottom right</li><li>Added errors</li></ul>
+        
+        <h2>v2.0.0</h2>
+        
+        <h3>Features</h3>
+        
+        <ul><li>Renamed to Formuliser</li><li>Added support for compounds</li><li>Auto subscript numbers</li><li>Added elements with unknown masses:<ul><li>Unbinilium</li><li>Unbiunium</li><li>Ununnenium</li><li>Livermorium</li><li>Oganesson</li><li>Moscovium</li><li>Flerovium</li><li>Tennessine</li><li>Nihonium</li></ul></li></ul>
+        
+        <h2>v1.0.0</h2>
+        
+        <p>Initial Release</p>
+    </div>
+
+    <div id="changelogBackground"></div>
 </body>

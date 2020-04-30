@@ -67,7 +67,7 @@ function actualTest() {
       let timeStart = performance.now();
       
       let results = test.run();
-      
+
       let timeTaken = performance.now() - timeStart;
       
       totalTimeTaken += timeTaken;

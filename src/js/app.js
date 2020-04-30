@@ -10,19 +10,22 @@ import { titleCase, evalExp, simplifyFormula, processFormula } from '/js/utils/p
 import { subscriptise, unsubscriptise } from '/js/utils/subscriptise';
 
 import { showInstallPrompt } from '/js/pwa/installPrompt';
-import * as CompoundSearch from '/js/ui/compoundSearch';
+import * as Search from '/js/ui/search';
 import {} from '/js/ui/dragPanels';
 import * as Formula from '/js/ui/formula';
 import * as Options from '/js/ui/options';
 import * as Panels from '/js/ui/panels';
 import * as Snackbar from '/js/ui/snackbar';
 
+import * as Changelog from '/js/ui/changelog';
+
 window.onload = function() {
-  CompoundSearch.init();
+  Search.init();
   Formula.init();
   Options.init();
   Panels.init();
   Snackbar.init();
+  Changelog.init();
 };
 
 import { popupify, splitAndPopupify } from '/js/ui/popupify';

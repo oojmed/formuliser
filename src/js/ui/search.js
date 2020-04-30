@@ -1,4 +1,6 @@
 import { compoundLookup, getCompoundByName, getCompoundsByFormula } from '/js/info/compounds';
+import { equationLookup } from '/js/info/equations';
+
 import { interpretInput } from '/js/ui/formula';
 
 import * as QuizGen from '/js/quiz/gen';
@@ -17,25 +19,25 @@ function searchText(toSearch, toFind, method, caseSensitive) {
     return toSearch.indexOf(toFind) !== -1;
   }
 
-  if (method === 'through') {
+  if (method === 'fuzzy') {
     let searchRegex = typeof toFind === 'string' ? generateThroughSearchRegex(toFind) : toFind;
 
     return toSearch.match(searchRegex) !== null;
   }
 }
 
-function generateCompoundList(search, sort) {
+function generateSearchList(search, sort, id, list) {
   search = search === undefined ? '' : search;
   sort = sort === undefined ? 'abc' : sort;
 
-  document.getElementById('compound-list').innerHTML = '';
+  document.getElementById(id).innerHTML = '';
 
   let searchRegex = generateThroughSearchRegex(search);
 
-  let compounds = compoundLookup.filter((x) => searchText(x.name, search, 'index', false));
+  let toSearch = list.filter((x) => searchText(x.name, search, 'index', false));
 
   if (sort === 'zyx') {
-    compounds = compounds.sort(function(a, b) {
+    toSearch = toSearch.sort(function(a, b) {
       var nameA = a.name.toLowerCase();
       var nameB = b.name.toLowerCase();
 
@@ -51,37 +53,41 @@ function generateCompoundList(search, sort) {
     });
   }
 
-  for (let i = 0; i < compounds.length; i++) {
+  for (let i = 0; i < toSearch.length; i++) {
     let el = document.createElement('button');
-    el.innerText = compounds[i].name;
+    el.innerText = toSearch[i].name;
 
     el.oncontextmenu = function() {
-      QuizGen.performCompoundQuiz(compounds[i]);
+      QuizGen.performCompoundQuiz(toSearch[i]);
 
       return false;
     };
 
     el.onclick = function() {
-      document.getElementById('formula').value = compounds[i].formula;
+      document.getElementById('formula').value = toSearch[i].formula;
       interpretInput();
     };
 
-    document.getElementById('compound-list').appendChild(el);
+    document.getElementById(id).appendChild(el);
   }
 
   let el = document.createElement('button');
-  el.id = 'compound-list-results';
+  el.className = 'list-results';
   el.disabled = true;
 
-  let ending = compounds.length > 1 ? 's' : '';
+  let ending = toSearch.length > 1 ? 's' : '';
 
-  el.innerText = `${compounds.length} compound${ending}`;
+  el.innerText = `${toSearch.length} compound${ending}`;
 
-  document.getElementById('compound-list').appendChild(el);
+  document.getElementById(id).appendChild(el);
 }
 
 function compoundSearch() {
-  generateCompoundList(document.getElementById('compound-search').value, document.getElementById('compound-sort').value);
+  generateSearchList(document.getElementById('compound-search').value, document.getElementById('compound-sort').value, 'compound-list', compoundLookup);
+}
+
+function equationSearch() {
+  generateSearchList(document.getElementById('equation-search').value, document.getElementById('equation-sort').value, 'equation-list', equationLookup);
 }
 
 export function init() {
@@ -93,5 +99,16 @@ export function init() {
     compoundSearch();
   };
 
-  generateCompoundList();
+
+  document.getElementById('equation-search').oninput = function() {
+    equationSearch();
+  };
+
+  document.getElementById('equation-sort').oninput = function() {
+    equationSearch();
+  };
+
+
+  compoundSearch();
+  equationSearch();
 }

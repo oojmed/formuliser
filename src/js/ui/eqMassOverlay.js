@@ -1,23 +1,16 @@
 import { getCharPos } from '/js/ui/formula';
-import { getIndexes } from '/js/ui/popupify';
+import { getFormulaRange } from '/js/ui/popupify';
 
 import { subscriptise, unsubscriptise } from '/js/utils/subscriptise';
 
-let counts = {};
-
 export function reset() {
-  counts = {};
-
   [].slice.call(document.getElementsByClassName('mass-overlay')).forEach((x) => document.body.removeChild(x));
 }
 
-export function overlay(formula, mass) {
+export function overlay(formula, mass, segmentNum) {
   formula = subscriptise(formula);
 
-  let v = document.getElementById('formula').value;
-
-  let indexStart = getIndexes(v, formula)[(counts[formula] || 0)];
-  let indexEnd = indexStart + formula.length - 1;
+  let {indexStart, indexEnd} = getFormulaRange(formula, segmentNum);
 
   let posStart = getCharPos(indexStart);
   let posEnd = getCharPos(indexEnd);
@@ -41,6 +34,4 @@ export function overlay(formula, mass) {
   overlay.innerText = Math.round(mass);
 
   document.body.appendChild(overlay);
-
-  counts[formula] = (counts[formula] || 0) + 1;
 }

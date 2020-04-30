@@ -47,8 +47,6 @@ function shownTotalMass(totalMass) {
 }
 
 export function processEquation(formula) {
-  MassOverlay.reset();
-
   let subformulae = formula.split(normalArrow).map((x) => x.replace(/ /g, '').split('+'));
 
   if (subformulae[0][0] === '') {
@@ -95,18 +93,95 @@ export function processEquation(formula) {
       }
     }
 
-    MassOverlay.overlay(subformulae[0].concat(subformulae[1])[i], r[1]);
+    MassOverlay.overlay(subformulae[0].concat(subformulae[1])[i], r[1], i);
 
     i++;
   }
 
   let percents = calcPercents(masses, totalMass);
 
-  return [name, shownTotalMass(totalMass), percents];
+  let expanded = subformulae.map((x) => [].concat.apply([], x.map((y) => expandFormula(y))));
+
+  let reactants = expanded[0].slice();
+  let products = expanded[1].slice();
+  
+  let {reactantsOver, productsOver} = moleculesOver(expanded[0], expanded[1]);
+
+  let allOver = productsOver.concat(reactantsOver);
+
+  let balanced = allOver.length === 0;
+
+  return [name, shownTotalMass(totalMass), percents, {productsOver, reactantsOver, allOver}];
+}
+
+function moleculesOver(products, reactants) {
+  let clonedReactants = reactants.slice();
+  let clonedProducts = products.slice();
+
+  let reactantsOver = flattenFormula(reactants.filter((x) => {
+    let i = clonedProducts.indexOf(x);
+
+    if (i === -1) { return true; }
+
+    clonedProducts.splice(i, 1);
+    return false;
+  }));
+
+  let productsOver = flattenFormula(products.filter((x) => {
+    let i = clonedReactants.indexOf(x);
+
+    if (i === -1) { return true; }
+
+    clonedReactants.splice(i, 1);
+    return false;
+  }));
+
+  return {reactantsOver, productsOver};
+}
+
+export function flattenFormula(arr) {
+  if (arr.length === 0) { return []; }
+
+  let final = [];
+  let count = 1;
+  for (let i = 0; i < arr.length; i++) {
+    if (i === 0) {
+      continue;
+    }
+
+    if (arr[i - 1] === arr[i]) {
+      count++;
+    } else {
+      final.push(`${arr[i - 1]}${count === 1 ? '' : count.toString()}`);
+      count = 1;
+    }
+  }
+
+  final.push(`${arr[arr.length - 1]}${count === 1 ? '' : count.toString()}`);
+
+  return final;
+}
+
+export function expandFormula(formula) {
+  let final = [];
+  let simplified = simplifyFormula(formula)[0];
+
+  for (let e of simplified) {
+    let numSplit = unsubscriptise(e).split(/(?=[0-9])/);
+    let el = numSplit.shift();
+    let num = parseFloat(numSplit.join(''));
+    num = isNaN(num) ? 1 : num;
+
+    for (let i = 0; i < num; i++) {
+      final.push(el);
+    }
+  }
+
+  return final;
 }
 
 export function simplifyFormula(formula) {
-  let symbols = formula.split(/(?=[A-Z\(\)])/);
+  let symbols = unsubscriptise(formula).split(/(?=[A-Z\(\)])/);
 
   if (/[0-9]/.test(symbols[0][0])) {
     let big = parseFloat(symbols.shift());
@@ -180,6 +255,8 @@ export function simplifyFormula(formula) {
 }
 
 export function processFormula(formula, subprocess) {
+  MassOverlay.reset();
+
   if (formula.includes(normalArrow)) {
     return processEquation(formula);
   }

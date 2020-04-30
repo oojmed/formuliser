@@ -2,8 +2,46 @@
 
 #### Changelog Notes
 > Regex used to replace compounds in code to compounds in markdown: `\{ name: '(.*)', formula: '(.*)' \},` to find and then using `  - $1 ($2)` to replace
+> Use https://markdownlivepreview.com for generating markdown HTML (remove these notes)
 
 ---
+
+## v3.0.0
+
+### Features
+#### Equations Panel
+- Added equations panel which shows equations and allows searching (and sorting), essentially the same as the compound panel but with equations
+
+#### Equation Balancing
+- Added balancing equations on enter (with the simplify on enter option enabled)
+
+#### Unbalanced Equation Overlay
+- Added unused molecules below the equation (for both sides)
+
+#### Changelog Window
+- Added the changelog window (opened by clicking the changelog link from the about panel)
+
+#### Arrow Replacing
+- Replace `<->` and `<=>` with a reversible arrow (⇌)
+
+
+### Fixes
+#### Highlighting UI
+- Don't highlight ' +' and ' →' when hovering over compound text
+- Be more exact with highlighting elements with a number (eg: O2 will be more exact with surrounding oxygen elements)
+- Overhaul counting system in popupify
+
+#### Equation Mass Overlay
+- Mass overlay is correctly removed when equation is changed from an equation into a regular formula
+- Same more exact improvements using the new index and range getting system as the highlighting UI
+
+#### Styling
+- Fixed cursor styling of elements
+- Fixed the bottom left corner of the compounds panel drawer not being curved
+
+#### Simplify Formula
+- Fixed subscriptised formulas passed breaking number prefixes
+
 
 ## v2.0.2
 

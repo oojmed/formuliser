@@ -61,7 +61,7 @@ export function popupify(el) {
     let rows = [];
 
     if (element !== undefined) {
-      formula = getSymbolFromElement(element) + (num !== 1 ? subscriptise(num.toString()) : '');
+      formula = subscriptise(`${getSymbolFromElement(element)}${num !== 1 ? num.toString() : ''}`);
       rows = [['Symbol', formula], ['Mass', element.mass * num], ['Atomic', element.atomic], ['Group', element.group], ['Period', element.period], ['Phase (STP)', element.state], ['Desc', element.desc]];
 
       formula = unsubscriptise(formula).replace(/[0-9]/g, '');
@@ -97,26 +97,7 @@ export function popupify(el) {
     }
 
     if (formula !== undefined) {
-      let v = unsubscriptise(document.getElementById('formula').value);
-
-      let indexStart = getIndexes(v, formula)[el.id.replace('element-', '')];
-
-      let indexEnd = indexStart + 1;
-
-      while (indexEnd < v.length) {
-        let re = compound === undefined ? /[A-Z\(\)]/ : / /;
-
-        if (re.test(v[indexEnd])) {
-          indexEnd--;
-          break;
-        }
-
-        indexEnd++;
-      }
-
-      if (indexEnd === v.length) {
-        indexEnd--;
-      }
+      let {indexStart, indexEnd} = getFormulaRange(`${formula}`, parseInt(el.id.replace('element-', '')));
 
       let posStart = getCharPos(indexStart);
       let posEnd = getCharPos(indexEnd);
@@ -141,33 +122,34 @@ export function popupify(el) {
   };
 }
 
-export function getIndexes(str, substring) {
-  let re = new RegExp(substring.replace('(', '\\(').replace(')', '\\)'), 'g');
-  let matches = [];
-  let match = null;
+export function getFormulaRange(formula, segmentNum) {
+  formula = unsubscriptise(formula);
 
-  while ((match = re.exec(str)) != null) {
-    matches.push(match.index);
-  }
+  let v = unsubscriptise(document.getElementById('formula').value);
 
-  return matches;
+  let segments = v.replace(' +', 'x+').replace(' →', 'x→').split(' ');
+
+  let segmentsBefore = segments.splice(0, segmentNum);
+  let segmentStartIndex = segmentsBefore.join('').length;
+
+  let indexStart = v.indexOf(formula, segmentStartIndex);
+  let indexEnd = indexStart + formula.length - 1;
+
+  return {indexStart, indexEnd};
 }
 
 export function splitAndPopupify(s) {
   let split = s.split(/(?=[A-Z])/);
   let els = [];
-  let counts = {};
 
   for (let i = 0; i < split.length; i++) {
-    let name = split[i].replace(', ', '');
-
-    counts[name] = (counts[name] || 0) + 1;
+    let name = split[i].replace(', ', '').replace(' + ', '').replace(' → ', '');
 
     s = s.replace(split[i], '');
 
     let el = document.createElement('span');
-    el.innerText = split[i] + ' ';
-    el.id = `element-${counts[name] - 1}`;
+    el.innerText = split[i];
+    el.id = `element-${i}`;
 
     if (split[i].trim() !== '-') {
       popupify(el);

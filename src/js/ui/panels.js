@@ -32,4 +32,12 @@ export function init() {
       setTimeout(function() { document.getElementById('compound-search').focus(); }, 600);
     }
   };
+
+  document.getElementById("equations-drawer").onclick = function() {
+    togglePanel('equations');
+
+    if (document.getElementById('equations').className === 'show') {
+      setTimeout(function() { document.getElementById('equation-search').focus(); }, 600);
+    }
+  };
 }

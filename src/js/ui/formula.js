@@ -5,12 +5,15 @@ import { arrowise } from '/js/utils/arrowise';
 
 import { popupify, splitAndPopupify } from '/js/ui/popupify';
 
+import { periodicLookup, getElementByName, getSymbolFromElement, getElementSymbolByName } from '/js/info/elements';
 import { compoundLookup, getCompoundByName, getCompoundsByFormula } from '/js/info/compounds';
 import { titleCase, evalExp, simplifyFormula, processFormula } from '/js/utils/process';
 
 import * as Tester from '/js/test/tester';
 
 import * as Pubchem from '/js/api/pubchem';
+
+import { balanceEquation } from '/js/utils/balance';
 
 let f;
 
@@ -24,9 +27,9 @@ export function init() {
 
       formula = unsubscriptise(formula);
 
-      formula = formula.replace(/[^a-z0-9 \(\)]/gmi, '');
+      if (Settings.reverse === true && !formula.includes('→')) {
+        formula = formula.replace(/[^a-z0-9 \(\)]/gmi, '');
 
-      if (Settings.reverse === true) {
         let reversed = processFormula(formula)[0];
 
         if (reversed !== false) {
@@ -39,10 +42,16 @@ export function init() {
       }
 
       if (Settings.simplify === true) {
-        let simplified = simplifyFormula(formula)[1];
+        if (formula.includes('→')) {
+          formula = balanceEquation(formula);
+        } else {
+          formula = formula.replace(/[^a-z0-9 \(\)]/gmi, '');
 
-        if (typeof simplified === 'string') {
-          formula = simplified;
+          let simplified = simplifyFormula(formula)[1];
+
+          if (typeof simplified === 'string') {
+            formula = simplified;
+          }
         }
       }
 
@@ -66,7 +75,7 @@ export function init() {
 document.onkeydown = function() {
   let focusedId = document.activeElement.id;
 
-  if (focusedId !== 'compound-search' && focusedId !== 'formula') {
+  if (focusedId !== 'compound-search' && focusedId !== 'formula' && focusedId !== 'equation-search') {
     f.focus();
   }
 };
@@ -172,6 +181,75 @@ export function interpretInput() {
     return;
   }
 
+
+  if (result[3] !== undefined) {
+    let arrowPos = getArrowPos();
+    let pRect = document.getElementById('elements-body').getBoundingClientRect();
+    let maxHeight = result[3].productsOver.length > result[3].reactantsOver.length ? result[3].productsOver.length : result[3].reactantsOver.length;
+    maxHeight *= 22;
+
+    let pastEls = ['gen-sline', 'gen-productstext', 'gen-reactantstext'];
+
+    for (let elID of pastEls) {
+      let el = document.getElementById(elID);
+
+      if (el !== null) {
+        document.body.removeChild(el);
+      }
+    }
+
+    if (maxHeight !== 0) {
+      let arrowSplit = value.split('→').map((x) => x.trim());
+      let reactants = simplifyFormula(arrowSplit[0])
+
+      let sLinePos = {left: arrowPos.right - 22, top: arrowPos.bottom + 10};
+
+      let sLine = document.createElement('div');
+      sLine.id = 'gen-sline';
+      sLine.style.width = '5px';
+      sLine.style.height = `${maxHeight}px`;
+      sLine.style.position = 'absolute';
+      sLine.style.left = `${sLinePos.left}px`;
+      sLine.style.top = `${sLinePos.top}px`;
+      sLine.style.backgroundColor = 'rgba(200, 202, 204, .2)';
+
+      let productsText = document.createElement('div');
+      productsText.id = 'gen-productstext';
+      productsText.style.left = `${sLinePos.left + 15}px`;
+      productsText.style.top = `${sLinePos.top}px`;
+      productsText.style.position = 'absolute';
+    
+      for (let p of result[3].productsOver) {
+        let num = parseInt(p.substring(1));
+
+        let el = document.createElement('div');
+        el.innerText =  (!isNaN(num) ? `${num} ` : '') + periodicLookup[p[0]].name;
+
+        productsText.appendChild(el);
+      }
+
+      let reactantsText = document.createElement('div');
+      reactantsText.id = 'gen-reactantstext';
+      reactantsText.style.right = `${window.innerWidth - (sLinePos.left - 10)}px`;
+      reactantsText.style.top = `${sLinePos.top}px`;
+      reactantsText.style.position = 'absolute';
+      reactantsText.style.textAlign = 'right';
+    
+      for (let p of result[3].reactantsOver) {
+        let num = parseInt(p.substring(1));
+
+        let el = document.createElement('div');
+        el.innerText =  (!isNaN(num) ? `${num} ` : '') + periodicLookup[p[0]].name;
+
+        reactantsText.appendChild(el);
+      }
+
+      document.body.appendChild(sLine);
+      document.body.appendChild(productsText);
+      document.body.appendChild(reactantsText);
+    }
+  }
+
   let popup = document.createElement('div');
   popup.id = 'mass-popup';
 
@@ -199,6 +277,10 @@ export function interpretInput() {
   }
 
   document.getElementById('mass').prepend(popup);
+}
+
+function getArrowPos() {
+  return [].slice.call(document.getElementById('elements-body').children).find((e) => e.innerText.includes('→')).getBoundingClientRect();
 }
 
 export function getCharPos(n) {
